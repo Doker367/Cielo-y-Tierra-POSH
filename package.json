@@ -17,7 +17,7 @@
     "express": "^4.21.2",
     "express-handlebars": "^8.0.1",
     "express-session": "^1.18.1",
-    "pg": "^8.13.3",
+    "mysql2": "^3.13.0",
     "ui-verse": "^0.1.5",
     "universe": "^0.8.1"
   },
