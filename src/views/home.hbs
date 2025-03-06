@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>CIELO Y TIERRA</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <!-- Contenedor que abarca toda la pantalla con la imagen de fondo -->
+  <div class="relative h-screen bg-cover bg-center" style="background-image: url('/images/inicio1.jpg');">
+    <!-- Navbar -->
+    <nav class="fixed w-full bg-gradient-to-b from-black to-transparent p-4 z-50">
+
+      <div class="max-w-6xl mx-auto flex items-center justify-between">
+        <div class="text-2xl font-bold">
+          <a href="#" class="text-red-500 fond-mono">Cielo y Tierra</a>
+        </div>
+        <ul class="flex space-x-4 md:space-x-8">
+          <li>
+            <a href="#" class="text-white hover:text-red-500 transition duration-300">Inicio</a>
+          </li>
+          <li>
+            <a href="/pages/comprar.html" class="bg-red-700 text-white px-1 py-.5 rounded-lg shadow-md hover:bg-red-500 transition">Comprar Ahora
+            </a>
+
+          </li>
+          <li>
+            <a href="/pages/nosotros.html" class="w-16 md:w-32 lg:w-48 text-white hover:text-red-500 transition duration-300">Acerca de nosotros</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <!-- Contenedor para el texto superpuesto en el lado izquierdo -->
+    <div class="absolute top-0 left-0 w-full h-full flex items-center justify-start pointer-events-none">
+      <div class="max-w-6xl px-4 md:pl-8 select-none cursor-default">
+        <h2 class="text-white text-3xl md:text-5xl font-bold text-left pb-4 md:pb-8">
+          Bebidas ¿Qué es el “posh”?<br>
+          Sabor de Chiapas en cada sorbo
+        </h2>
+        <p class="text-white text-base md:text-lg text-left mt-4">
+          Un vehículo de tradición y espiritualidad que ha perdurado a través de los siglos <br>entre las comunidades indígenas tsotsiles y tseltales.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <section class="relative h-screen">
+    <!-- Imagen de fondo con un blur sutil y degradado -->
+    <div class="absolute inset-0">
+      <img src="/images/inicio4.jpg" alt="Fondo" class="w-full h-full object-cover" loading="lazy" >
+      <!-- Degradado que va de un negro semitransparente a transparente -->
+      <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+    </div>
+    <!-- Contenido de la sección, sin fondo blanco detrás de los textos -->
+    <div class="relative h-full flex items-center px-4">
+      <div class="w-full flex flex-col md:flex-row justify-end items-center">
+        <!-- Columna con imagen (por ejemplo, la imagen del producto) -->
+        <div class="w-full md:w-1/2 p-4">
+          <img src="/images/inicio2.jpg" alt="El Posh" class="w-full object-cover rounded-lg" loading="lazy">
+        </div>
+        <!-- Columna con el texto descriptivo, alineado a la derecha -->
+        <div class="w-full md:w-1/2 p-4 text-center md:text-left text-white">
+          <h2 class="text-2xl md:text-3xl font-bold">
+            El Posh: Medicina para el Cuerpo y para el Alma
+          </h2>
+          <p class="mt-4 text-base md:text-lg">
+            El Alcohol por sus bondades curativas desempeñó un papel clave en las austeras intervenciones médicas que se realizaban en tierras Chiapanecas en el periodo Colonial. Además, el Posh fue ganando fama al ser un remedio efectivo para curar las dolencias del alma como el miedo, la tristeza y la falta de coraje, y por otra parte proporcionaba un medio para desinfectar heridas si se aplicaba en la piel.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="relative h-screen">
+    <!-- Imagen de fondo con un blur sutil y degradado -->
+    <div class="absolute inset-0">
+      <img src="/images/inicio4.jpg" alt="Fondo" class="w-full h-full object-cover" loading="lazy">
+      <!-- Degradado que va de un negro semitransparente a transparente -->
+      <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+    </div>
+    <!-- Contenido de la sección, sin fondo blanco detrás de los textos -->
+    <div class="relative h-full flex items-center px-4">
+      <div class="w-full flex flex-col md:flex-row justify-end items-center">
+        <!-- Columna con imagen (por ejemplo, la imagen del producto) -->
+        <div class="w-full md:w-1/2 p-4 text-center md:text-left text-white">
+          <h2 class="text-2xl md:text-3xl font-bold">
+            ALAN POR EL MUNDO EN NUESTRO SHOWROOM
+          </h2>
+          <p class="mt-4 text-base md:text-lg">
+            Recibimos a Alan Estrada creador de uno de los canales con más influencia para turismo de Experiencias en México 
+          </p>
+        </div>
+        <!-- Columna con el texto descriptivo, alineado a la derecha -->
+        <div class="w-full md:w-1/2 p-4 text-center md:text-right text-white">
+        <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+          <iframe src="https://www.youtube.com/embed/Y8HWAfmdr10" title="Video de YouTube" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+ <section class="relative min-h-screen bg-cover bg-center" style="background-image: url('/images/inicio4.jpg');">
+  <!-- Degradado superpuesto -->
+  <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+  <!-- Título centrado en la parte de arriba -->
+  
+  <div class="relative pt-8">
+    <h1 class="text-white text-4xl font-bold text-center">¿Preguntas frecuentes?</h1>
+  </div>
+  
+  <!-- Contenido de la sección -->
+  <div class="relative flex flex-col md:flex-row items-center px-4 py-8">
+    <div class="w-full flex flex-col md:flex-row justify-end items-center">
+      <!-- Columna con imagen del producto -->
+      <div class="w-full md:w-1/2 p-4">
+        <img src="/images/inicio5.jpg" alt="El Posh" class="w-full object-cover rounded-lg" loading="lazy">
+      </div>
+      <!-- Columna con texto descriptivo -->
+      <div class="w-full md:w-1/2 p-4 text-center md:text-left text-white">
+        <h2 class="text-2xl md:text-3xl font-bold">¿Qué quiere decir Pox?</h2>
+        <p class="mt-4 text-base md:text-lg pb-10">
+          Pox significa salud o medicina en el vocablo Tzotzil, que es una clase de maya contemporáneo, la historia está arriba.
+        </p>
+        <h2 class="text-2xl md:text-3xl font-bold">¿Se dice Posh o se dice Pox?</h2>
+        <p class="mt-4 text-base md:text-lg pb-10">
+          Se puede decir de las dos maneras, ambas son correctas.
+        </p>
+        <h2 class="text-2xl md:text-3xl font-bold">¿Cuántos grados tiene el Pox?</h2>
+        <p class="mt-4 text-base md:text-lg pb-10">
+          En el mercado se manejan diferentes porcentajes de alcohol, depende de la marca, el volumen más popular es el de 30° de Alcohol,
+          pero se encuentran desde 25° hasta 85°. En nuestro proyecto nosotros manejamos posh desde los 27° hasta los 85°. Conoce nuestros productos aquí.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Segunda sección, ya con imagen a la derecha -->
+<section class="relative min-h-screen bg-cover bg-center" style="background-image: url('/images/inicio4.jpg');">
+  <!-- Degradado superpuesto -->
+  <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+  <!-- Contenido de la sección -->
+  <div class="relative flex flex-col md:flex-row items-center px-4 py-8">
+    <div class="w-full flex flex-col md:flex-row-reverse justify-end items-center">
+      <!-- Columna con imagen del producto (ahora a la derecha) -->
+      <div class="w-full md:w-1/2 p-4">
+        <img src="/images/inicio6.png" alt="El Posh" class="w-full object-cover rounded-lg">
+      </div>
+      <!-- Columna con texto descriptivo -->
+      <div class="w-full md:w-1/2 p-4 text-center md:text-left text-white">
+        <h2 class="text-2xl md:text-3xl font-bold">¿Cuantos tipos de Pox hay?</h2>
+        <p class="mt-4 text-base md:text-lg pb-10">
+          En nuestra casa Licorera tenemos aproximadamente 100 variedades con diferentes sabores, distintas etapas de añejamiento y diversidad en los grados de alcohol.<br>
+          Click abajo para conocer los productos.
+        </p>
+        <h2 class="text-2xl md:text-3xl font-bold">¿Cuál es la bebida típica de Chiapas?</h2>
+        <p class="mt-4 text-base md:text-lg pb-10">
+          Si es con alcohol entonces es el Posh, si es sin alcohol, entonces la bebida más típica de Chiapas es el agua de chía, que es básicamente una limonada con semillas de chía.<br>
+          El estado de Chiapas se llama así precisamente porque en época de los Aztecas en Chiapas había mucha chía y le pusieron de nombre "Chiapan" que significa ríos donde hay chía.
+        </p>
+        <h2 class="text-2xl md:text-3xl font-bold">¿Qué es el pox Tzotzil?</h2>
+        <p class="mt-4 text-base md:text-lg pb-10">
+          Es el pox que se consume en las comunidades indígenas cerca de la ciudad de San Cristóbal de las Casas, sobre todo en el municipio de Chamula.
+        </p>
+        <h2 class="text-2xl md:text-3xl font-bold">¿Qué es el pox ámbar?</h2>
+        <p class="mt-4 text-base md:text-lg pb-10">
+          Es un tipo de posh al cual se le ponen piezas de ámbar en el interior y está reposado en barricas de roble blanco por un mes.<br><br>
+          En nuestra casa Licorera, además de posh ámbar, tenemos posh con cuentas de Jade Verde y Jade Negro, cada uno más añejado que el otro.<br><br>
+          Conoce nuestros productos aquí.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<footer class="bg-black text-white py-8 px-4">
+  <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 text-center md:text-left">
+    
+    <!-- Logo y descripción -->
+    <div>
+      <h2 class="text-2xl font-bold text-red-500">Cielo y Tierra</h2>
+      <p class="text-gray-400 mt-2 text-sm sm:text-base">
+        Tradición y cultura en cada sorbo. Vive la experiencia del auténtico posh chiapaneco.
+      </p>
+    </div>
+
+    <!-- Enlaces rápidos -->
+    <div>
+      <h3 class="text-lg font-bold text-red-500">Enlaces</h3>
+      <ul class="mt-2 space-y-1 sm:space-y-2">
+        <li><a href="#" class="hover:text-red-500 transition">Inicio</a></li>
+        <li><a href="#" class="hover:text-red-500 transition">Comprar</a></li>
+        <li><a href="/pages/nosotros.html" class="hover:text-red-500 transition">Acerca de nosotros</a></li>
+        <li><a href="#" class="hover:text-red-500 transition">Preguntas frecuentes</a></li>
+      </ul>
+    </div>
+
+  <!-- Redes sociales -->
+<div class="flex flex-col items-center md:items-start">
+  <h3 class="text-lg font-bold text-red-500">Síguenos</h3>
+  <div class="flex space-x-6 mt-3">
+    <a href="#" class="text-gray-400 hover:text-red-500 transition text-2xl">
+      <img src="/images/icons/facebook.svg" alt="Facebook Icon" class="w-8 h-8" />
+    </a>
+    <a href="#" class="text-gray-400 hover:text-red-500 transition text-2xl">
+      <img src="/images/icons/instagram.svg" alt="Instagram Icon" class="w-8 h-8" />
+    </a>
+    <a href="#" class="text-gray-400 hover:text-red-500 transition text-2xl">
+      <img src="/images/icons/twitter.svg" alt="Twitter Icon" class="w-8 h-8" />
+    </a>
+  </div>
+</div>
+  <!-- Línea divisoria -->
+  <div class="border-t border-gray-700 mt-6"></div>
+
+  <!-- Derechos reservados -->
+  <div class="text-center text-gray-500 text-sm mt-4">
+    &copy; 2025 Cielo y Tierra. Todos los derechos reservados.
+  </div>
+</footer>
+
+
+
+
+
+</body>
+</html>

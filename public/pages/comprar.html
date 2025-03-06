@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Cielo y Tierra - Compras</title>
+    <style>
+        body {
+            background-color: black;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="fixed w-full bg-gradient-to-b from-black to-transparent p-4 z-50">
+        <div class="max-w-6xl mx-auto flex items-center justify-between">
+            <div class="text-2xl font-bold">
+                <a href="#" class="text-red-500 font-mono">Cielo y Tierra</a>
+            </div>
+            <ul class="flex space-x-4 md:space-x-8">
+                <li>
+                    <a href="#" class="text-white hover:text-red-500 transition duration-300">Inicio</a>
+                </li>
+                <li>
+                    <a href="/comprar" class="bg-red-700 text-white px-2 py-1 rounded-lg shadow-md hover:bg-red-500 transition">Comprar Ahora</a>
+                </li>
+                <li>
+                    <a href="/pages/nosotros.html" class="w-16 md:w-32 lg:w-48 text-white hover:text-red-500 transition duration-300">Acerca de nosotros</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- Carrusel de fotos -->
+    <div class="mt-16 max-w-6xl mx-auto">
+        <div class="relative">
+            <div class="carousel">
+                <!-- Aquí puedes agregar las imágenes del carrusel -->
+                <img src="ruta/a/tu/imagen1.jpg" alt="Vino 1" class="w-full h-64 object-cover rounded-lg shadow-lg">
+                <img src="ruta/a/tu/imagen2.jpg" alt="Vino 2" class="w-full h-64 object-cover rounded-lg shadow-lg">
+                <img src="images/inicio4.jpg" alt="Vino 3" class="w-full h-64 object-cover rounded-lg shadow-lg">
+                <!-- Agrega más imágenes según sea necesario -->
+            </div>
+        </div>
+    </div>
+    <!-- Productos -->
+    <div class="max-w-6xl mx-auto mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <!-- Carta de producto -->
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <img src="/images/inicio4.jpg" alt="Producto 1" class="w-full h-48 object-cover">
+            <div class="p-4">
+                <h3 class="text-lg font-bold">Nombre del Producto 1</h3>
+                <p class="text-gray-700">$20.00</p>
+                <div class="flex items-center justify-between mt-2">
+                    <div class="flex items-center">
+                        <i class="fas fa-shopping-cart text-red-500"></i>
+                        <span class="ml-1">4.5</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Repite la carta de producto para más productos -->
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <img src="/images/inicio4.jpg" alt="Producto 2" class="w-full h-48 object-cover">
+            <div class="p-4">
+                <h3 class="text-lg font-bold">Nombre del Producto 2</h3>
+                <p class="text-gray-700">$25.00</p>
+                <div class="flex items-center justify-between mt-2">
+                    <div class="flex items-center">
+                        <i class="fas fa-shopping-cart text-red-500"></i>
+                        <span class="ml-1">4.0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Agrega más cartas de productos según sea necesario -->
+    </div>
+    <script>
+        // Aquí puedes agregar el código para el carrusel si es necesario
+    </script>
+</body>
+</html>
