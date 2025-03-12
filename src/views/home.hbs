@@ -10,23 +10,32 @@
   <!-- Contenedor que abarca toda la pantalla con la imagen de fondo -->
     <div class="relative h-screen bg-cover bg-center" style="background-image: url('/images/inicio1.jpg');">
   <!-- Navbar -->
-    <nav class="fixed w-full bg-gradient-to-b from-black to-transparent p-4 z-50">
+    <nav class="fixed w-full bg-black p-4 z-50">
 
       <div class="max-w-6xl mx-auto flex items-center justify-between">
         <div class="text-2xl font-bold">
-          <a href="#" class="text-red-500 fond-mono">Cielo y Tierra</a>
+          <a href="#" class="text-white fond-mono">Cielo y Tierra</a>
         </div>
-        <ul class="flex space-x-4 md:space-x-8">
+        <ul class="flex space-x-4 md:space-x-8 items-center">
           <li>
-            <a href="#" class="text-white hover:text-red-500 transition duration-300">Inicio</a>
+            <a href="#" class="text-white hover:text-white transition duration-300 hover:underline hover:underline-offset-4 hover:decoration-blue-500">
+              Inicio</a>
           </li>
           <li>
-            <a href="/pages/comprar.html" class="bg-red-700 text-white px-1 py-1 pb-1 pt-1 rounded-lg shadow-md hover:bg-red-500 transition">Comprar Ahora
+            <a href="/pages/comprar.html" class="flex items-center bg-red-700 text-white px-1 py-1 pb-1 pt-1 rounded-lg shadow-md hover:bg-red-500 transition">
+              <img src="/images/icons/Cart.gif" alt="Login Icon" class="w-6 h-6 mr-2" />
+              Comprar Ahora
             </a>
 
           </li>
           <li>
-            <a href="/pages/nosotros.html" class="w-16 md:w-32 lg:w-48 text-white hover:text-red-500 transition duration-300">Acerca de nosotros</a>
+            <a href="/pages/nosotros.html" class="w-16 md:w-32 lg:w-48 text-white hover:text-white transition duration-300 hover:underline hover:underline-offset-4 hover:decoration-blue-500">Acerca de nosotros</a>
+          </li>
+          <li>
+            <a href="/pages/login.html" class="flex items-center text-white hover:text-white transition duration-300 hover:underline hover:underline-offset-4 hover:decoration-blue-500">
+              <img src="/images/icons/Register.gif" alt="Login Icon" class="w-6 h-6 mr-2" />
+              Iniciar Sesión
+            </a>
           </li>
         </ul>
       </div>
@@ -45,19 +54,13 @@
     </div>
   </div>
 
-  <section class="relative h-screen">
-    <!-- Imagen de fondo con un blur sutil y degradado -->
-    <div class="absolute">
-      <img src="/images/inicio4.jpg" alt="Fondo" class="w-full h-full object-cover" loading="lazy" >
-      <!-- Degradado que va de un negro semitransparente a transparente -->
-      <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-    </div>
+  <section class="relative h-screen bg-black">
     <!-- Contenido de la sección, sin fondo blanco detrás de los textos -->
     <div class="relative h-full flex items-center px-4">
       <div class="w-full flex flex-col md:flex-row justify-end items-center">
         <!-- Columna con imagen (por ejemplo, la imagen del producto) -->
         <div class="w-full md:w-1/2 p-4">
-          <img src="/images/inicio2.jpg" alt="El Posh" class="w-full object-cover rounded-lg" loading="lazy">
+          <img src="/images/inicio2.jpg" alt="El Posh" class="w-full object-cover rounded-lg transition-transform duration-500 hover:scale-105" loading="lazy">
         </div>
         <!-- Columna con el texto descriptivo, alineado a la derecha -->
         <div class="w-full md:w-1/2 p-4 text-center md:text-left text-white">
@@ -72,13 +75,7 @@
     </div>
   </section>
 
-  <section class="relative h-screen">
-    <!-- Imagen de fondo con un blur sutil y degradado -->
-    <div class="absolute inset-0">
-      <img src="/images/inicio4.jpg" alt="Fondo" class="w-full h-full object-cover" loading="lazy">
-      <!-- Degradado que va de un negro semitransparente a transparente -->
-      <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-    </div>
+  <section class="relative h-screen bg-black">
     <!-- Contenido de la sección, sin fondo blanco detrás de los textos -->
     <div class="relative h-full flex items-center px-4">
       <div class="w-full flex flex-col md:flex-row justify-end items-center">
@@ -101,9 +98,7 @@
     </div>
   </section>
 
- <section class="relative min-h-screen bg-cover bg-center" style="background-image: url('/images/inicio4.jpg');">
-  <!-- Degradado superpuesto -->
-  <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+ <section class="relative min-h-screen bg-black">
   <!-- Título centrado en la parte de arriba -->
   
   <div class="relative pt-8">
@@ -115,7 +110,7 @@
     <div class="w-full flex flex-col md:flex-row justify-end items-center">
       <!-- Columna con imagen del producto -->
       <div class="w-full md:w-1/2 p-4">
-        <img src="/images/inicio5.jpg" alt="El Posh" class="w-full object-cover rounded-lg" loading="lazy">
+        <img src="/images/inicio5.jpg" alt="El Posh" class="w-full object-cover rounded-lg transition-transform duration-500 hover:scale-105" loading="lazy">
       </div>
       <!-- Columna con texto descriptivo -->
       <div class="w-full md:w-1/2 p-4 text-center md:text-left text-white">
@@ -137,15 +132,13 @@
   </div>
 </section>
 <!-- Segunda sección, ya con imagen a la derecha -->
-<section class="relative min-h-screen bg-cover bg-center" style="background-image: url('/images/inicio4.jpg');">
-  <!-- Degradado superpuesto -->
-  <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+<section class="relative min-h-screen bg-black">
   <!-- Contenido de la sección -->
   <div class="relative flex flex-col md:flex-row items-center px-4 py-8">
     <div class="w-full flex flex-col md:flex-row-reverse justify-end items-center">
       <!-- Columna con imagen del producto (ahora a la derecha) -->
       <div class="w-full md:w-1/2 p-4">
-        <img src="/images/inicio6.png" alt="El Posh" class="w-full object-cover rounded-lg">
+        <img src="/images/inicio6.png" alt="El Posh" class="w-full object-cover rounded-lg transition-transform duration-500 hover:scale-105" loading="lazy">
       </div>
       <!-- Columna con texto descriptivo -->
       <div class="w-full md:w-1/2 p-4 text-center md:text-left text-white">
