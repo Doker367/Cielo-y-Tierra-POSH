@@ -124,7 +124,7 @@
                             -${producto.descuento || 0}%
                         </span>
                         <div>
-                            <img src="/images/productos/default.jpg" alt="${producto.nombre}" class="object-contain w-full h-48">
+                            <img src="${producto.imagen}" alt="${producto.nombre}" class="object-contain w-full h-48">
                         </div>
                     </div>
                     <div class="mt-4">
@@ -160,6 +160,34 @@
             console.log(`Producto ${productoId} agregado al carrito`);
             // Implementar lógica del carrito aquí
         }
+
+        // Lógica del carrusel
+        document.addEventListener('DOMContentLoaded', function () {
+            const carousel = document.querySelector('.carousel');
+            const items = document.querySelectorAll('.carousel-item');
+            const prevButton = document.querySelector('.carousel-control-prev');
+            const nextButton = document.querySelector('.carousel-control-next');
+            let currentIndex = 0;
+
+            function showItem(index) {
+                items.forEach((item, i) => {
+                    item.style.transform = `translateX(${100 * (i - index)}%)`;
+                });
+            }
+
+            prevButton.addEventListener('click', () => {
+                currentIndex = (currentIndex > 0) ? currentIndex - 1 : items.length - 1;
+                showItem(currentIndex);
+            });
+
+            nextButton.addEventListener('click', () => {
+                currentIndex = (currentIndex < items.length - 1) ? currentIndex + 1 : 0;
+                showItem(currentIndex);
+            });
+
+            showItem(currentIndex); // Mostrar el primer elemento inicialmente
+        });
+
         // Renderizar productos al cargar la página
         document.addEventListener('DOMContentLoaded', renderizarProductos);
     </script>

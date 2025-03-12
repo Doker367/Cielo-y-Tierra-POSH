@@ -1,7 +1,7 @@
 {
   "name": "proyrcto_integrador",
   "version": "1.0.0",
-  "description": "",
+  "description": "Proyecto e-commerce para la venta de bebidas tradicionales de Chiapas. ## Tecnologías utilizadas - Node.js - Express - PostgreSQL - Handlebars - TailwindCSS ## Instalación 1. Clonar el repositorio 2. Ejecutar `npm install` 3. Configurar variables de entorno en `.env` 4. Ejecutar `npm run dev` para desarrollo",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -19,10 +19,19 @@
     "express-handlebars": "^8.0.1",
     "express-session": "^1.18.1",
     "mysql2": "^3.13.0",
+    "tailwindcss": "^4.0.13",
     "ui-verse": "^0.1.5",
     "universe": "^0.8.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.9"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Doker367/Cielo-y-Tierra-POSH.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Doker367/Cielo-y-Tierra-POSH/issues"
+  },
+  "homepage": "https://github.com/Doker367/Cielo-y-Tierra-POSH#readme"
 }

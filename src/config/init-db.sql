@@ -63,10 +63,17 @@ INSERT INTO marcas (nombre, descripcion, pais_origen) VALUES
 ('Ancestral', 'Posh tradicional de Chiapas', 'México'),
 ('Spirit of Maya', 'Posh premium con técnicas ancestrales', 'México');
 -- Insertar datos de ejemplo en productos
-INSERT INTO productos_posh (nombre, descripcion, id_categoria, id_marca, precio_regular, precio_descuento, contenido_ml, grados_alcohol) VALUES
-('Posh Tradicional 750ml', 'Posh tradicional de caña de azúcar', 1, 1, 350.00, 280.00, 750, 35.00),
-('Posh Ámbar', 'Posh añejado con ámbar', 3, 1, 450.00, 360.00, 750, 38.00),
-('Posh Frutal', 'Posh saborizado con frutas tropicales', 2, 2, 380.00, 320.00, 750, 30.00);
+INSERT INTO productos_posh (nombre, descripcion, categoria_id, marca_id, precio, contenido_ml) VALUES
+('Posh Tradicional 750ml', 'Posh tradicional de caña de azúcar, elaborado artesanalmente en Chiapas.', 1, 1, 350.00, 750),
+('Posh Ámbar', 'Posh añejado con ámbar, con un sabor suave y aromático.', 3, 1, 450.00, 750),
+('Posh Frutal', 'Posh saborizado con frutas tropicales como mango, piña y maracuyá.', 2, 2, 380.00, 750),
+('Posh de Café', 'Posh destilado con granos de café arábica de Chiapas, con un aroma intenso.', 2, 3, 400.00, 750),
+('Posh de Naranja', 'Posh con un toque cítrico de naranja valenciana, ideal para cócteles.', 2, 2, 370.00, 750),
+('Posh de Mango', 'Posh saborizado con mango ataulfo, dulce y refrescante.', 2, 1, 390.00, 750),
+('Posh de Piña', 'Posh con un refrescante sabor a piña natural, perfecto para el verano.', 2, 3, 380.00, 750),
+('Posh de Maracuyá', 'Posh con el exótico sabor del maracuyá, ideal para paladares aventureros.', 2, 2, 410.00, 750),
+('Posh de Cacao', 'Posh con notas de cacao puro de Chiapas, un deleite para los amantes del chocolate.', 3, 1, 450.00, 750),
+('Posh de Canela', 'Posh con un toque especiado de canela, perfecto para días fríos.', 2, 3, 360.00, 750);
 -- Insertar datos de ejemplo en inventario
 INSERT INTO inventario (id_producto, cantidad, ubicacion) VALUES
 (1, 100, 'Almacén Principal'),
@@ -77,3 +84,5 @@ INSERT INTO calificaciones (id_producto, puntuacion, comentario, nombre_usuario)
 (1, 4.5, 'Excelente sabor tradicional', 'Juan Pérez'),
 (2, 5.0, 'El mejor posh premium que he probado', 'María García'),
 (3, 4.0, 'Muy buen balance de sabores', 'Carlos López');
+
+
