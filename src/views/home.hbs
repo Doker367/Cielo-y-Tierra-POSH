@@ -5,41 +5,50 @@
   <title>CIELO Y TIERRA</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.2s ease-out, transform 0.6s ease-out;
+    }
+    .animate-on-scroll.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
 </head>
 <body>
   <!-- Contenedor que abarca toda la pantalla con la imagen de fondo -->
     <div class="relative h-screen bg-cover bg-center" style="background-image: url('/images/inicio1.jpg');">
   <!-- Navbar -->
-    <nav class="fixed w-full bg-black p-4 z-50">
-
-      <div class="max-w-6xl mx-auto flex items-center justify-between">
-        <div class="text-2xl font-bold">
-          <a href="#" class="text-white fond-mono">Cielo y Tierra</a>
-        </div>
-        <ul class="flex space-x-4 md:space-x-8 items-center">
-          <li>
-            <a href="#" class="text-white hover:text-white transition duration-300 hover:underline hover:underline-offset-4 hover:decoration-blue-500">
-              Inicio</a>
-          </li>
-          <li>
-            <a href="/pages/comprar.html" class="flex items-center bg-red-700 text-white px-1 py-1 pb-1 pt-1 rounded-lg shadow-md hover:bg-red-500 transition">
-              <img src="/images/icons/Cart.gif" alt="Login Icon" class="w-6 h-6 mr-2" />
-              Comprar Ahora
-            </a>
-
-          </li>
-          <li>
-            <a href="/pages/nosotros.html" class="w-16 md:w-32 lg:w-48 text-white hover:text-white transition duration-300 hover:underline hover:underline-offset-4 hover:decoration-blue-500">Acerca de nosotros</a>
-          </li>
-          <li>
-            <a href="/pages/inisiosesion.html" class="flex items-center text-white hover:text-white transition duration-300 hover:underline hover:underline-offset-4 hover:decoration-blue-500">
-              <img src="/images/icons/Register.gif" alt="Login Icon" class="w-6 h-6 mr-2" />
-              Iniciar Sesión
-            </a>
-          </li>
-        </ul>
+  <nav class="fixed w-full bg-black p-4 z-50">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+      <div class="text-2xl font-bold">
+        <a href="#" class="text-white fond-mono">Cielo y Tierra</a>
       </div>
-    </nav>
+      <ul class="flex space-x-4 md:space-x-8 items-center">
+        <li>
+          <a href="#" class="text-white hover:text-white transition duration-300 hover:underline hover:underline-offset-4 hover:decoration-blue-500">
+            Inicio</a>
+        </li>
+        <li>
+          <a href="/pages/comprar.html" class="flex items-center bg-red-700 text-white px-1 py-1 pb-1 pt-1 rounded-lg shadow-md hover:bg-red-500 transition">
+            <img src="/images/icons/Cart.gif" alt="Login Icon" class="w-6 h-6 mr-2 hover:animate-bounce" />
+            Comprar Ahora
+          </a>
+        </li>
+        <li>
+          <a href="/pages/nosotros.html" class="w-16 md:w-32 lg:w-48 text-white hover:text-white transition duration-300 hover:underline hover:underline-offset-4 hover:decoration-blue-500">Acerca de nosotros</a>
+        </li>
+        <li>
+          <a href="/pages/inisiosesion.html" class="flex items-center text-white hover:text-white transition duration-300 hover:underline hover:underline-offset-4 hover:decoration-blue-500">
+            <img src="/images/icons/Register.gif" alt="Login Icon" class="w-6 h-6 mr-2 hover:animate-bounce" />
+            Iniciar Sesión
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
     <!-- Contenedor para el texto superpuesto en el lado izquierdo -->
     <div class="absolute top-0 left-0 w-full h-full flex items-center justify-start pointer-events-none">
       <div class="max-w-6xl px-4 md:pl-8 select-none cursor-default">
@@ -54,7 +63,7 @@
     </div>
   </div>
 
-  <section class="relative h-screen bg-black">
+  <section class="relative h-screen bg-black animate-on-scroll">
     <!-- Contenido de la sección, sin fondo blanco detrás de los textos -->
     <div class="relative h-full flex items-center px-4">
       <div class="w-full flex flex-col md:flex-row justify-end items-center">
@@ -75,7 +84,7 @@
     </div>
   </section>
 
-  <section class="relative h-screen bg-black">
+  <section class="relative h-screen bg-black animate-on-scroll">
     <!-- Contenido de la sección, sin fondo blanco detrás de los textos -->
     <div class="relative h-full flex items-center px-4">
       <div class="w-full flex flex-col md:flex-row justify-end items-center">
@@ -98,7 +107,7 @@
     </div>
   </section>
 
- <section class="relative min-h-screen bg-black">
+ <section class="relative min-h-screen bg-black animate-on-scroll">
   <!-- Título centrado en la parte de arriba -->
   
   <div class="relative pt-8">
@@ -131,7 +140,7 @@
   </div>
 </section>
 <!-- Segunda sección, ya con imagen a la derecha -->
-<section class="relative min-h-screen bg-black">
+<section class="relative min-h-screen bg-black animate-on-scroll">
   <!-- Contenido de la sección -->
   <div class="relative flex flex-col md:flex-row items-center px-4 py-8">
     <div class="w-full flex flex-col md:flex-row-reverse justify-end items-center">
@@ -168,7 +177,7 @@
 
 
 
-<footer class="bg-black text-white py-8 px-4">
+<footer class="bg-black text-white py-8 px-4 animate-on-scroll">
   <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-8 text-center md:text-left">
     
     <!-- Logo y descripción -->
@@ -213,5 +222,21 @@
     &copy; 2025 Cielo y Tierra. Todos los derechos reservados.
   </div>
 </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('.animate-on-scroll').forEach(section => {
+        observer.observe(section);
+      });
+    });
+  </script>
 </body>
 </html>

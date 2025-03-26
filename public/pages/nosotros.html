@@ -7,10 +7,16 @@
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet"
     href="https://horizon-ui.com/shadcn-nextjs-boilerplate/_next/static/css/32144b924e2aa5af.css" />
+  <style>
+    .parallax {
+      background-attachment: fixed;
+      background-size: cover;
+    }
+  </style>
 </head>
 <body>
   <!-- Contenedor que abarca toda la pantalla con la imagen de fondo -->
-  <div class="relative h-screen bg-cover bg-center" style="background-image: url('/images/inicio1.jpg');">
+  <div class="relative h-screen bg-cover bg-center parallax" style="background-image: url('/images/inicio1.jpg');">
     <!-- Navbar -->
     <nav class="bg-gradient-to-b from-black to-transparent p-4">
       <div class="max-w-6xl mx-auto flex items-center justify-between">
@@ -44,7 +50,7 @@
     </div>
   </div>
   
-  <section class="relative h-screen bg-black text-white">
+  <section class="relative h-screen bg-black text-white parallax" style="background-image: url('/images/inicio2.jpg');">
     <div class="relative inset-0">
       <div class="rela inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
     </div>
@@ -110,7 +116,7 @@
     </div>
   </section>
   
-  <section class="bg-gray-900">
+  <section class="bg-gray-900 parallax" style="background-image: url('/images/inicio3.jpg');">
     <div class="text-center py-8">
       <h1 class="text-4xl font-bold">Formulario</h1>
     </div>    
