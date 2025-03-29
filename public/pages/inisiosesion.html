@@ -12,7 +12,14 @@
             <h2 class="text-2xl font-bold text-center">Iniciar Sesión</h2>
             <p class="text-center text-gray-600">Usa tu cuenta de Google para iniciar sesión</p>
             <form>
-                <button class="w-full flex items-center justify-center bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition">
+                <div class="space-y-4">
+                    <input type="text" placeholder="Usuario" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <input type="password" placeholder="Contraseña" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <button type="button" onclick="window.location.href='/pages/registro.html'" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-gray-700 transition mt-2">
+                    Iniciar sesion
+                </button>
+                <button class="w-full flex items-center justify-center bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition mt-4">
                     <svg class="w-6 h-6 mr-2" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
                         <path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12
                         c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24
