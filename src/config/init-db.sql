@@ -55,7 +55,7 @@ CREATE TABLE calificaciones (
 -- Crear tabla de clasificaciones
 CREATE TABLE usuarios (
     id INT AUTO_INCREMENT PRIMARY KEY, -- Identificador único para cada usuario
-    nombre_usuario VARCHAR(50) NOT NULL UNIQUE, -- Nombre de usuario único
+    nombre_usuario VARCHAR(50) NOT NULL, -- Nombre de usuario único
     correo VARCHAR(100) NOT NULL UNIQUE, -- Correo electrónico único
     contrasena VARCHAR(255) NOT NULL, -- Contraseña encriptada
     fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Fecha de registro
