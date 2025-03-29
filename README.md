@@ -6,6 +6,7 @@ Proyecto e-commerce para la venta de bebidas tradicionales de Chiapas.
 - PostgreSQL
 - Handlebars
 - TailwindCSS
+-React
 ## Instalación
 1. Clonar el repositorio
 2. Ejecutar `npm install`
