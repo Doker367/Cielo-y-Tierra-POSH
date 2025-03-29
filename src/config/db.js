@@ -24,4 +24,7 @@ pool.getConnection((err, connection) => {
     console.log('Conexión exitosa a la base de datos MySQL');
     connection.release();
 });
-module.exports = promisePool;
+module.exports = {
+    promisePool, // Exportar el pool de promesas
+    pool // Exportar el pool normal para callbacks
+};

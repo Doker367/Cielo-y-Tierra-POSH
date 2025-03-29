@@ -1,0 +1,3 @@
+ALTER TABLE usuarios
+DROP COLUMN rol,
+DROP COLUMN estado;

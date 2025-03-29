@@ -59,8 +59,6 @@ CREATE TABLE usuarios (
     correo VARCHAR(100) NOT NULL UNIQUE, -- Correo electrónico único
     contrasena VARCHAR(255) NOT NULL, -- Contraseña encriptada
     fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Fecha de registro
-    rol ENUM('usuario', 'admin') DEFAULT 'usuario', -- Rol del usuario
-    estado ENUM('activo', 'inactivo') DEFAULT 'activo' -- Estado del usuario
 );
 
 -- Insertar datos de ejemplo en categorías
