@@ -58,7 +58,7 @@ CREATE TABLE usuarios (
     nombre_usuario VARCHAR(50) NOT NULL, -- Nombre de usuario único
     correo VARCHAR(100) NOT NULL UNIQUE, -- Correo electrónico único
     contrasena VARCHAR(255) NOT NULL, -- Contraseña encriptada
-    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Fecha de registro
+    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- Fecha de registro
 );
 
 -- Insertar datos de ejemplo en categorías
