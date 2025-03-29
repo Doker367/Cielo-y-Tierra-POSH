@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "animate.css": "^4.1.1",
     "body-parser": "^1.20.3",
     "bootstrap": "^5.3.3",
     "clsx": "^2.1.1",
@@ -19,6 +20,7 @@
     "express": "^4.21.2",
     "express-handlebars": "^8.0.1",
     "express-session": "^1.18.1",
+    "flowbite": "^3.1.2",
     "motion": "^12.5.0",
     "mysql2": "^3.13.0",
     "tailwind-merge": "^3.0.2",

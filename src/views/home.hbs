@@ -4,12 +4,17 @@
   <meta charset="UTF-8">
   <title>CIELO Y TIERRA</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
+  <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     .animate-on-scroll {
       opacity: 0;
-      transform: translateY(10px);
-      transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+      transform: translateY(5px);
+      transition: opacity 0.1s ease-out, transform 0.1s ease-out;
     }
     .animate-on-scroll.visible {
       opacity: 1;
@@ -24,11 +29,11 @@
   <nav class="fixed w-full bg-black p-4 z-50">
     <div class="max-w-6xl mx-auto flex items-center justify-between">
       <div class="text-2xl font-bold">
-        <a href="#" class="text-white fond-mono">Cielo y Tierra</a>
+        <a href="#" class="text-white fond-mono ">Cielo y Tierra</a>
       </div>
       <ul class="flex space-x-4 md:space-x-8 items-center">
         <li>
-          <a href="#" class="text-white hover:text-white transition duration-300 hover:underline hover:underline-offset-4 hover:decoration-blue-500">
+          <a href="#" class="text-white hover:text-white transition duration-100 hover:underline hover:underline-offset-4 hover:decoration-blue-500">
             Inicio</a>
         </li>
         <li>
@@ -38,10 +43,10 @@
           </a>
         </li>
         <li>
-          <a href="/pages/nosotros.html" class="w-16 md:w-32 lg:w-48 text-white hover:text-white transition duration-300 hover:underline hover:underline-offset-4 hover:decoration-blue-500">Acerca de nosotros</a>
+          <a href="/pages/nosotros.html" class="w-16 md:w-32 lg:w-48 text-white hover:text-white transition duration-100 hover:underline hover:underline-offset-4 hover:decoration-blue-500">Acerca de nosotros</a>
         </li>
         <li>
-          <a href="/pages/inisiosesion.html" class="flex items-center text-white hover:text-white transition duration-300 hover:underline hover:underline-offset-4 hover:decoration-blue-500">
+          <a href="/pages/inisiosesion.html" class="flex items-center text-white hover:text-white transition duration-100 hover:underline hover:underline-offset-4 hover:decoration-blue-500">
             <img src="/images/icons/Register.gif" alt="Login Icon" class="w-6 h-6 mr-2 hover:animate-bounce" />
             Iniciar Sesión
           </a>
@@ -52,11 +57,11 @@
     <!-- Contenedor para el texto superpuesto en el lado izquierdo -->
     <div class="absolute top-0 left-0 w-full h-full flex items-center justify-start pointer-events-none">
       <div class="max-w-6xl px-4 md:pl-8 select-none cursor-default">
-        <h2 class="text-white text-3xl md:text-5xl font-bold text-left pb-4 md:pb-8">
+        <h2 class="animate__bounceIn text-white text-3xl md:text-5xl font-bold text-left pb-4 md:pb-8">
           Bebidas ¿Qué es el “posh”?<br>
           Sabor de Chiapas en cada sorbo
         </h2>
-        <p class="text-white text-base md:text-lg text-left mt-4">
+        <p class="animate__bounceIn text-white text-base md:text-lg text-left mt-4">
           Un vehículo de tradición y espiritualidad que ha perdurado a través de los siglos <br>entre las comunidades indígenas tsotsiles y tseltales.
         </p>
       </div>
@@ -121,8 +126,8 @@
         <img src="/images/inicio5.jpg" alt="El Posh" class="w-100% object-cover rounded-lg transition-transform duration-500 hover:scale-105" loading="lazy">
       </div>
       <!-- Columna con texto descriptivo -->
-      <div class="w-full md:w-1/2 p-4 text-center md:text-left text-white">
-        <h2 class="text-2xl md:text-3xl font-bold">¿Qué quiere decir Pox?</h2>
+      <div class="w-full md:w-1/2 p-2 text-center md:text-left text-white">
+        <h2 class="text-2xl md:text-3xl font-bold p" >¿Qué quiere decir Pox?</h2>
         <p class="mt-4 text-base md:text-lg pb-10">
           Pox significa salud o medicina en el vocablo Tzotzil, que es una clase de maya contemporáneo, la historia está arriba.
         </p>
@@ -168,7 +173,7 @@
         <p class="mt-4 text-base md:text-lg pb-10">
           Es un tipo de posh al cual se le ponen piezas de ámbar en el interior y está reposado en barricas de roble blanco por un mes.<br><br>
           En nuestra casa Licorera, además de posh ámbar, tenemos posh con cuentas de Jade Verde y Jade Negro, cada uno más añejado que el otro.<br><br>
-          Conoce nuestros productos aquí.
+          <button type="button" class="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Comprar ahora</button>
         </p>
       </div>
     </div>
