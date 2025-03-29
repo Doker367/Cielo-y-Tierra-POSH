@@ -52,6 +52,17 @@ CREATE TABLE calificaciones (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_producto) REFERENCES productos_posh(id_producto)
 );
+-- Crear tabla de clasificaciones
+CREATE TABLE usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY, -- Identificador único para cada usuario
+    nombre_usuario VARCHAR(50) NOT NULL UNIQUE, -- Nombre de usuario único
+    correo VARCHAR(100) NOT NULL UNIQUE, -- Correo electrónico único
+    contrasena VARCHAR(255) NOT NULL, -- Contraseña encriptada
+    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Fecha de registro
+    rol ENUM('usuario', 'admin') DEFAULT 'usuario', -- Rol del usuario
+    estado ENUM('activo', 'inactivo') DEFAULT 'activo' -- Estado del usuario
+);
+
 -- Insertar datos de ejemplo en categorías
 INSERT INTO categorias_posh (nombre, descripcion) VALUES
 ('Posh Tradicional', 'Bebidas tradicionales de posh sin sabores añadidos'),
