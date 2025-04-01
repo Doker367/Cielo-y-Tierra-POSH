@@ -18,34 +18,39 @@
   <!-- Contenedor que abarca toda la pantalla con la imagen de fondo -->
   <div class="relative h-screen bg-cover bg-center parallax" style="background-image: url('/images/inicio1.jpg');">
     <!-- Navbar -->
-    <nav class="bg-gradient-to-b from-black to-transparent p-4">
-      <div class="max-w-6xl mx-auto flex items-center justify-between">
-        <div class="text-2xl font-bold">
-          <a href="#" class="text-red-500">Cielo y Tierra</a>
-        </div>
-        <ul class="flex space-x-4 md:space-x-8">
-          <li>
-            <a href="/" class="text-white hover:text-red-500 transition duration-100">Inicio</a>
-          </li>
-          <li>
-            <a href="#" class="text-white hover:text-red-500 transition duration-100">Comprar</a>
-          </li>
-          <li>
-            <a href="/pages/nosotros.html" class="text-white hover:text-red-500 transition duration-300">Acerca de nosotros</a>
-          </li>
-        </ul>
+  <nav class="fixed w-full bg-black p-4 z-50">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+      <div class="text-2xl font-bold">
+        <a href="#" class="text-white fond-mono ">Cielo y Tierra</a>
       </div>
-    </nav>
+      <ul class="flex space-x-4 md:space-x-8 items-center">
+        <li>
+          <a href="/" class="text-white hover:text-white transition duration-100 hover:underline hover:underline-offset-4 hover:decoration-blue-500">
+            Inicio</a>
+        </li>
+        <li>
+          <a href="/pages/comprar.html" class="flex items-center bg-red-700 text-white px-1 py-1 pb-1 pt-1 rounded-lg shadow-md hover:bg-red-500 transition">
+            <img src="/images/icons/Cart.gif" alt="Login Icon" class="w-6 h-6 mr-2 hover:animate-bounce" />
+            Comprar Ahora
+          </a>
+        </li>
+        <li>
+          <a href="/pages/nosotros.html" class="w-16 md:w-32 lg:w-48 text-white hover:text-white transition duration-100 hover:underline hover:underline-offset-4 hover:decoration-blue-500">Acerca de nosotros</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
     <!-- Contenedor para el texto superpuesto en el lado izquierdo -->
     <div class="absolute top-0 left-0 w-full h-full flex items-center justify-start pointer-events-none">
       <div class="max-w-6xl px-4 md:pl-8 select-none cursor-default">
-        <h1 class="text-white text-3xl md:text-5xl font-bold text-left pb-4 md:pb-8">
-          Bebidas ¿Qué es el “posh”?<br>
-          Sabor de Chiapas en cada sorbo
+        <h1 class="text-white text-4xl md:text-5xl font-bold text-left pb-4 md:pb-8">
+          Acerca de Nosotros
         </h1>
-        <p class="text-white text-base md:text-lg text-left mt-4">
-          Un vehículo de tradición y espiritualidad que ha perdurado a través de los siglos entre las comunidades indígenas tsotsiles y tseltales.
-        </p>
+        <div class="text-white text-base md:text-lg text-left mt-4 md:pl-4 w-2/5">
+          <p>
+            En Cielo y Tierra, nos especializamos en ofrecer la mejor selección de posh, una bebida tradicional con raíces profundas en la cultura chiapaneca. Nos apasiona preservar la autenticidad de esta bebida artesanal, garantizando su calidad y sabor en cada botella.
+          </p>
+        </div>
       </div>
     </div>
   </div>

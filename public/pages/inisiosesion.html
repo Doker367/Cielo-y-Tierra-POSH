@@ -11,13 +11,13 @@
         <div class="w-full max-w-md p-8 space-y-8 bg-gray-100 rounded-lg shadow-md">
             <h2 class="text-2xl font-bold text-center">Iniciar Sesión</h2>
             <p class="text-center text-gray-600">Usa tu cuenta de Google para iniciar sesión</p>
-            <form>
+            <form onsubmit="return validateForm(event)">
                 <div class="space-y-4">
-                    <input type="text" placeholder="Usuario" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <input type="password" placeholder="Contraseña" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <input id="usuario" type="text" placeholder="Usuario o Correo" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <input id="contrasena" type="password" placeholder="Contraseña" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
-                <button type="button" onclick="window.location.href='/pages/registro.html'" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-gray-700 transition mt-2">
-                    Iniciar sesion
+                <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-gray-700 transition mt-2">
+                    Iniciar sesión
                 </button>
                 <button class="w-full flex items-center justify-center bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition mt-4">
                     <svg class="w-6 h-6 mr-2" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
@@ -38,5 +38,41 @@
             <p class="text-center text-gray-600">¿No tienes una cuenta? <a href="/pages/registro.html" class="text-blue-600 hover:underline">Regístrate aquí</a></p>
         </div>
     </div>
+    <script>
+        async function validateForm(event) {
+            event.preventDefault(); // Evitar el envío predeterminado del formulario
+
+            const usuario = document.getElementById('usuario').value.trim();
+            const contrasena = document.getElementById('contrasena').value.trim();
+
+            if (!usuario || !contrasena) {
+                alert('Por favor, complete todos los campos.');
+                return false;
+            }
+
+            try {
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ correo: usuario, nombre_usuario: usuario, contrasena })
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    alert('Inicio de sesión exitoso');
+                    // Redirigir al usuario a otra página si es necesario
+                    window.location.href = '/dashboard';
+                } else {
+                    alert(result.message || 'Error al iniciar sesión');
+                }
+            } catch (error) {
+                console.error('Error al iniciar sesión:', error);
+                alert('Error al iniciar sesión. Inténtelo de nuevo más tarde.');
+            }
+
+            return false;
+        }
+    </script>
 </body>
 </html>

@@ -10,17 +10,7 @@
   />
   <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    .animate-on-scroll {
-      opacity: 0;
-      transform: translateY(5px);
-      transition: opacity 0.1s ease-out, transform 0.1s ease-out;
-    }
-    .animate-on-scroll.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  </style>
+  <link rel="stylesheet" href="/styles/animations.css"> <!-- Mover estilos en línea a un archivo externo -->
 </head>
 <body>
   <!-- Contenedor que abarca toda la pantalla con la imagen de fondo -->
@@ -45,12 +35,7 @@
         <li>
           <a href="/pages/nosotros.html" class="w-16 md:w-32 lg:w-48 text-white hover:text-white transition duration-100 hover:underline hover:underline-offset-4 hover:decoration-blue-500">Acerca de nosotros</a>
         </li>
-        <li>
-          <a href="/pages/inisiosesion.html" class="flex items-center text-white hover:text-white transition duration-100 hover:underline hover:underline-offset-4 hover:decoration-blue-500">
-            <img src="/images/icons/Register.gif" alt="Login Icon" class="w-6 h-6 mr-2 hover:animate-bounce" />
-            Iniciar Sesión
-          </a>
-        </li>
+
       </ul>
     </div>
   </nav>
@@ -123,7 +108,7 @@
     <div class="w-full flex flex-col md:flex-row justify-end items-center">
       <!-- Columna con imagen del producto -->
       <div class="w-full md:w-1/2 p-4">
-        <img src="/images/inicio5.jpg" alt="El Posh" class="w-100% object-cover rounded-lg transition-transform duration-500 hover:scale-105" loading="lazy">
+        <img src="/images/inicio5.jpg" alt="El Posh" class="w-full object-cover rounded-lg transition-transform duration-500 hover:scale-105" loading="lazy">
       </div>
       <!-- Columna con texto descriptivo -->
       <div class="w-full md:w-1/2 p-2 text-center md:text-left text-white">

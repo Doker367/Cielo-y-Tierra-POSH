@@ -74,6 +74,38 @@ exports.createUser = (req, res) => {
     });
 };
 
+// Función para iniciar sesión
+exports.loginUser = (req, res) => {
+    const { correo, nombre_usuario, contrasena } = req.body;
+
+    // Validar que al menos correo o nombre_usuario y contrasena estén presentes
+    if ((!correo && !nombre_usuario) || !contrasena) {
+        return res.status(400).json({
+            message: "Debe proporcionar correo o nombre_usuario, y la contraseña"
+        });
+    }
+
+    // Construir la consulta dinámica según los campos proporcionados
+    const query = correo
+        ? "SELECT id, nombre_usuario, correo FROM usuarios WHERE correo = ? AND contrasena = ?"
+        : "SELECT id, nombre_usuario, correo FROM usuarios WHERE nombre_usuario = ? AND contrasena = ?";
+    const params = correo ? [correo, contrasena] : [nombre_usuario, contrasena];
+
+    pool.query(query, params, (err, results) => {
+        if (err) {
+            console.error('Error al iniciar sesión:', err);
+            return res.status(500).json({ message: "Error al iniciar sesión", error: err });
+        }
+        if (results.length === 0) {
+            return res.status(401).json({ message: "Usuario o contraseña incorrectos" });
+        }
+        res.json({
+            message: "Inicio de sesión exitoso",
+            user: results[0]
+        });
+    });
+};
+
 // Función para actualizar un usuario
 exports.updateUser = (req, res) => {
     const { id } = req.params;

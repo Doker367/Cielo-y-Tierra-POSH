@@ -18,24 +18,34 @@
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="fixed w-full bg-black p-4 z-50 ">
-        <div class="max-w-6xl mx-auto flex items-center justify-between">
-            <div class="text-2xl font-bold">
-                <a href="#" class="text-red-500 font-mono">Cielo y Tierra</a>
-            </div>
-            <ul class="flex space-x-4 md:space-x-8">
-                <li>
-                    <a href="/" class="text-white hover:text-red-500 transition duration-100">Inicio</a>
-                </li>
-                <li>
-                    <a href="/pages/comprar.html" class="bg-red-700 text-white px-1 py-1 pb-1 pt-1 rounded-lg shadow-md hover:bg-red-500 transition">Comprar Ahora</a>
-                </li>
-                <li>
-                    <a href="/pages/nosotros.html" class="w-16 md:w-32 lg:w-48 text-white hover:text-red-500 transition duration-100">Acerca de nosotros</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+  <nav class="fixed w-full bg-black p-4 z-50">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+      <div class="text-2xl font-bold">
+        <a href="#" class="text-white fond-mono ">Cielo y Tierra</a>
+      </div>
+      <ul class="flex space-x-4 md:space-x-8 items-center">
+        <li>
+          <a href="/" class="text-white hover:text-white transition duration-100 hover:underline hover:underline-offset-4 hover:decoration-blue-500">
+            Inicio</a>
+        </li>
+        <li>
+          <a href="/pages/comprar.html" class="flex items-center bg-red-700 text-white px-1 py-1 pb-1 pt-1 rounded-lg shadow-md hover:bg-red-500 transition">
+            <img src="/images/icons/Cart.gif" alt="Login Icon" class="w-6 h-6 mr-2 hover:animate-bounce" />
+            Comprar Ahora
+          </a>
+        </li>
+        <li>
+          <a href="/pages/nosotros.html" class="w-16 md:w-32 lg:w-48 text-white hover:text-white transition duration-100 hover:underline hover:underline-offset-4 hover:decoration-blue-500">Acerca de nosotros</a>
+        </li>
+        <li>
+          <a href="/pages/inisiosesion.html" class="flex items-center text-white hover:text-white transition duration-100 hover:underline hover:underline-offset-4 hover:decoration-blue-500">
+            <img src="/images/icons/Register.gif" alt="Login Icon" class="w-6 h-6 mr-2 hover:animate-bounce" />
+            Iniciar Sesión
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
 
     <!-- Carrusel -->
     <div class="relative "> <!-- Añadido mt-20 para dar espacio debajo de la navbar -->
