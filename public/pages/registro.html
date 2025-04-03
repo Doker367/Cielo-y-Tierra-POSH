@@ -30,5 +30,43 @@
             <p class="text-center text-gray-600">¿Ya tienes una cuenta? <a href="/pages/inisiosesion.html" class="text-blue-600 hover:underline">Inicia sesión aquí</a></p>
         </div>
     </div>
+    <script>
+        async function validateForm(event) {
+            event.preventDefault(); // Evitar el envío predeterminado del formulario
+
+            const nombre = document.getElementById('nombre').value.trim();
+            const correo = document.getElementById('correo').value.trim();
+            const contrasena = document.getElementById('contrasena').value.trim();
+
+
+            if (!usuario || !contrasena) {
+                alert('Por favor, complete todos los campos.');
+                return false;
+            }
+
+            try {
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ correo: usuario, nombre_usuario: usuario, contrasena })
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    alert('Inicio de sesión exitoso');
+                    // Redirigir al usuario a otra página si es necesario
+                    window.location.href = '/dashboard';
+                } else {
+                    alert(result.message || 'Error al iniciar sesión');
+                }
+            } catch (error) {
+                console.error('Error al iniciar sesión:', error);
+                alert('Error al iniciar sesión. Inténtelo de nuevo más tarde.');
+            }
+
+            return false;
+        }
+    </script>
 </body>
 </html>

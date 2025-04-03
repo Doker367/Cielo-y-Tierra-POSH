@@ -8,6 +8,7 @@ class ProductController {
                 nombre: producto.nombre,
                 descripcion: producto.descripcion,
                 precio: parseFloat(producto.precio),
+                imagen: producto.imagen,
                 descuento: Math.round(((producto.precio_regular - producto.precio_descuento) / producto.precio_regular) * 100)
             }));
         } catch (error) {
