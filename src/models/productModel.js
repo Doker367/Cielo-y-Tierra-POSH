@@ -8,6 +8,7 @@ class ProductModel {
                     producto_id,
                     nombre,
                     descripcion,
+                    imagen,
                     precio,
                     contenido_ml
                 FROM productos_posh
