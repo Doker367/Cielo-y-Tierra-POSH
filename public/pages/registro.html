@@ -10,7 +10,7 @@
     <div class="flex flex-col justify-center items-center bg-white h-screen">
         <div class="w-full max-w-md p-8 space-y-8 bg-gray-100 rounded-lg shadow-md">
             <h2 class="text-2xl font-bold text-center">Registro</h2>
-            <form class="space-y-4" action="/api/users" method="POST">
+            <form class="space-y-4" action="/api/users" method="POST" onsubmit="return handleFormSubmit(event)">
                 <div>
                     <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre completo</label>
                     <input type="text" id="nombre" name="nombre_usuario" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" required>
@@ -31,41 +31,63 @@
         </div>
     </div>
     <script>
-        async function validateForm(event) {
-            event.preventDefault(); // Evitar el envío predeterminado del formulario
+        async function handleFormSubmit(event) {
+            event.preventDefault(); // Prevent default form submission
 
             const nombre = document.getElementById('nombre').value.trim();
             const correo = document.getElementById('correo').value.trim();
             const contrasena = document.getElementById('contrasena').value.trim();
 
-
-            if (!usuario || !contrasena) {
+            if (!nombre || !correo || !contrasena) {
                 alert('Por favor, complete todos los campos.');
                 return false;
             }
 
             try {
-                const response = await fetch('/login', {
+                const response = await fetch('/api/users', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ correo: usuario, nombre_usuario: usuario, contrasena })
+                    body: JSON.stringify({ nombre_usuario: nombre, correo, contrasena })
                 });
 
                 const result = await response.json();
 
                 if (response.ok) {
-                    alert('Inicio de sesión exitoso');
-                    // Redirigir al usuario a otra página si es necesario
-                    window.location.href = '/dashboard';
+                    // Show success modal
+                    showSuccessModal('Registro exitoso', 'Su cuenta ha sido creada exitosamente.');
+                    // Redirect after a short delay
+                    setTimeout(() => {
+                        window.location.href = '/pages/comprarRegistrado.html';
+                    }, 2000);
                 } else {
-                    alert(result.message || 'Error al iniciar sesión');
+                    alert(result.message || 'Error al registrar el usuario');
                 }
             } catch (error) {
-                console.error('Error al iniciar sesión:', error);
-                alert('Error al iniciar sesión. Inténtelo de nuevo más tarde.');
+                console.error('Error al registrar el usuario:', error);
+                alert('Error al registrar el usuario. Inténtelo de nuevo más tarde.');
             }
 
             return false;
+        }
+
+        function showSuccessModal(title, message) {
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50';
+            modal.innerHTML = `
+                <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+                    <h2 class="text-2xl font-bold mb-4">${title}</h2>
+                    <p class="text-gray-700 mb-4">${message}</p>
+                    <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition" onclick="closeModal()">Cerrar</button>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        function closeModal() {
+            const modal = document.querySelector('.fixed.inset-0');
+            if (modal) {
+                modal.remove();
+            }
         }
     </script>
 </body>
