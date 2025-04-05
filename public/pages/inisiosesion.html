@@ -40,38 +40,103 @@
     </div>
     <script>
         async function validateForm(event) {
-            event.preventDefault(); // Evitar el envío predeterminado del formulario
+            event.preventDefault();
 
+            // Mostrar estado de carga
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="spinner">⏳</span> Validando...';
+
+            // Obtener valores
             const usuario = document.getElementById('usuario').value.trim();
             const contrasena = document.getElementById('contrasena').value.trim();
 
+            // Validación frontend básica
             if (!usuario || !contrasena) {
-                alert('Por favor, complete todos los campos.');
-                return false;
+                showError('Por favor, complete todos los campos');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Iniciar sesión';
+                return;
             }
 
             try {
+                // Enviar datos al servidor
                 const response = await fetch('/login', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ correo: usuario, nombre_usuario: usuario, contrasena })
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: JSON.stringify({ 
+                        correo: usuario.includes('@') ? usuario : null,
+                        nombre_usuario: usuario.includes('@') ? null : usuario,
+                        contrasena 
+                    })
                 });
+
+                // Verificar si la respuesta es JSON
+                const contentType = response.headers.get('Content-Type');
+                if (!contentType || !contentType.includes('application/json')) {
+                    throw new Error('El servidor devolvió una respuesta no válida.');
+                }
 
                 const result = await response.json();
 
-                if (response.ok) {
-                    alert('Inicio de sesión exitoso');
-                    // Redirigir al usuario a otra página si es necesario
-                    window.location.href = '/dashboard';
-                } else {
-                    alert(result.message || 'Error al iniciar sesión');
+                if (!response.ok) {
+                    // Manejar errores específicos
+                    const errorMsg = result.code === 4004 
+                        ? 'Usuario no registrado. ¿Quieres <a href="/pages/registro.html">crear una cuenta</a>?'
+                        : result.code === 4003
+                            ? 'Contraseña incorrecta. ¿<a href="/recuperar-contrasena">Olvidaste tu contraseña</a>?'
+                            : result.message || 'Error desconocido';
+                    
+                    showError(errorMsg, true);
+                    return;
                 }
-            } catch (error) {
-                console.error('Error al iniciar sesión:', error);
-                alert('Error al iniciar sesión. Inténtelo de nuevo más tarde.');
-            }
 
-            return false;
+                // Login exitoso
+                showSuccess('¡Bienvenido! Redirigiendo...');
+                setTimeout(() => {
+                    window.location.href = '/pages/comprarRegistrado.html'; // Redirigir a comprarRegistrado.html
+                }, 500);
+
+            } catch (error) {
+                console.error('Error en la solicitud:', error);
+                showError(`Error de conexión: ${error.message}`);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Iniciar sesión';
+            }
+        }
+
+        // Funciones auxiliares para mostrar mensajes
+        function showError(message, isHTML = false) {
+            const errorDiv = document.getElementById('error-message') || createMessageElement();
+            if (isHTML) {
+                errorDiv.innerHTML = message;
+            } else {
+                errorDiv.textContent = message;
+            }
+            errorDiv.style.color = 'red';
+            errorDiv.style.display = 'block';
+        }
+
+        function showSuccess(message) {
+            const successDiv = document.getElementById('success-message') || createMessageElement();
+            successDiv.textContent = message;
+            successDiv.style.color = 'green';
+            successDiv.style.display = 'block';
+        }
+
+        function createMessageElement() {
+            const form = document.querySelector('form');
+            const messageDiv = document.createElement('div');
+            messageDiv.id = 'feedback-message';
+            messageDiv.style.margin = '10px 0';
+            messageDiv.style.padding = '10px';
+            messageDiv.style.borderRadius = '5px';
+            form.prepend(messageDiv);
+            return messageDiv;
         }
     </script>
 </body>

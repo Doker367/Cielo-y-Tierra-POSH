@@ -1,5 +1,6 @@
 // src/controllers/user.controller.js
-const { pool } = require('../config/db'); // Importar el pool de conexiones
+const { pool, promisePool } = require('../config/db'); // Importar el pool de conexiones y el pool de promesas
+const bcrypt = require('bcrypt'); // Importar bcrypt para cifrar contraseñas
 
 // Función para obtener todos los usuarios
 exports.getUsers = (req, res) => {
@@ -30,7 +31,7 @@ exports.getUser = (req, res) => {
 };
 
 // Función para crear un usuario
-exports.createUser = (req, res) => {
+exports.createUser = async (req, res) => {
     console.log("Headers:", req.headers); // Verifica los encabezados de la solicitud
     console.log("Request body received:", req.body); // Verifica el cuerpo de la solicitud
 
@@ -44,66 +45,107 @@ exports.createUser = (req, res) => {
         });
     }
 
-    // Verificar si el correo ya existe
-    const checkQuery = "SELECT id FROM usuarios WHERE correo = ?";
-    console.log("Executing query to check email:", checkQuery, [correo]); // Debugging log
-    pool.query(checkQuery, [correo], (err, results) => {
-        if (err) {
-            console.error('Error al verificar el correo:', err);
-            return res.status(500).json({ message: "Error al verificar el correo", error: err });
-        }
+    try {
+        // Verificar si el correo ya existe
+        const checkQuery = "SELECT id FROM usuarios WHERE correo = ?";
+        console.log("Executing query to check email:", checkQuery, [correo]); // Debugging log
+        const [results] = await promisePool.query(checkQuery, [correo]);
+
         if (results.length > 0) {
             console.log("Correo ya registrado:", correo); // Debugging log
             return res.status(409).json({ message: "El correo ya está registrado" });
         }
 
+        // Cifrar la contraseña antes de almacenarla
+        const hashedPassword = await bcrypt.hash(contrasena, 10);
+
         // Insertar el nuevo usuario
         const insertQuery = "INSERT INTO usuarios (nombre_usuario, correo, contrasena) VALUES (?, ?, ?)";
-        console.log("Executing query to insert user:", insertQuery, [nombre_usuario, correo, contrasena]); // Debugging log
-        pool.query(insertQuery, [nombre_usuario, correo, contrasena], (err, result) => {
-            if (err) {
-                console.error('Error al registrar el usuario:', err);
-                return res.status(500).json({ message: "Error al registrar usuario", error: err });
-            }
-            console.log("Usuario registrado exitosamente:", result); // Debugging log
-            res.json({
-                message: 'Usuario registrado exitosamente',
-                data: { id: result.insertId, nombre_usuario, correo }
-            });
+        console.log("Executing query to insert user:", insertQuery, [nombre_usuario, correo, hashedPassword]); // Debugging log
+        const [result] = await promisePool.query(insertQuery, [nombre_usuario, correo, hashedPassword]);
+
+        console.log("Usuario registrado exitosamente:", result); // Debugging log
+        res.json({
+            message: 'Usuario registrado exitosamente',
+            data: { id: result.insertId, nombre_usuario, correo }
         });
-    });
+    } catch (err) {
+        console.error('Error al registrar el usuario:', err);
+        res.status(500).json({ message: "Error al registrar usuario", error: err });
+    }
 };
 
 // Función para iniciar sesión
-exports.loginUser = (req, res) => {
-    const { correo, nombre_usuario, contrasena } = req.body;
+exports.loginUser = async (req, res) => {
+    console.log("Datos recibidos para login:", req.body); // Debug 1
+    
+    try {
+        const { correo, nombre_usuario, contrasena } = req.body;
 
-    // Validar que al menos correo o nombre_usuario y contrasena estén presentes
-    if ((!correo && !nombre_usuario) || !contrasena) {
-        return res.status(400).json({
-            message: "Debe proporcionar correo o nombre_usuario, y la contraseña"
+        // Validación mejorada
+        if (!contrasena || (!correo && !nombre_usuario)) {
+            console.log("Faltan campos requeridos"); // Debug 2
+            return res.status(400).json({
+                code: 4001,
+                message: "Debes proporcionar (correo o nombre de usuario) y contraseña",
+            });
+        }
+
+        // Buscar usuario
+        const query = correo 
+            ? "SELECT * FROM usuarios WHERE correo = ?"
+            : "SELECT * FROM usuarios WHERE nombre_usuario = ?";
+        
+        const params = [correo || nombre_usuario];
+        console.log("Query a ejecutar:", query, params); // Debug 3
+
+        const [users] = await promisePool.query(query, params);
+        
+        if (users.length === 0) {
+            console.log("Usuario no encontrado"); // Debug 4
+            return res.status(404).json({
+                code: 4004,
+                message: "Usuario no encontrado",
+            });
+        }
+
+        const user = users[0];
+        console.log("Usuario encontrado (sin contraseña):", { 
+            id: user.id, 
+            nombre_usuario: user.nombre_usuario, 
+            correo: user.correo 
+        }); // Debug 5
+
+        // Comparar contraseñas (asumiendo que están hasheadas)
+        const bcrypt = require('bcrypt');
+        const match = await bcrypt.compare(contrasena, user.contrasena);
+        if (!match) {
+            console.log("Contraseña incorrecta"); // Debug 6
+            return res.status(401).json({
+                code: 4003,
+                message: "Contraseña incorrecta",
+            });
+        }
+
+        // Éxito
+        console.log("Login exitoso para usuario ID:", user.id); // Debug 7
+        res.json({
+            success: true,
+            user: {
+                id: user.id,
+                nombre_usuario: user.nombre_usuario,
+                correo: user.correo
+            }
+        });
+
+    } catch (error) {
+        console.error("Error completo en login:", error); // Debug 8
+        
+        res.status(500).json({
+            code: 5000,
+            message: "Error interno del servidor",
         });
     }
-
-    // Construir la consulta dinámica según los campos proporcionados
-    const query = correo
-        ? "SELECT id, nombre_usuario, correo FROM usuarios WHERE correo = ? AND contrasena = ?"
-        : "SELECT id, nombre_usuario, correo FROM usuarios WHERE nombre_usuario = ? AND contrasena = ?";
-    const params = correo ? [correo, contrasena] : [nombre_usuario, contrasena];
-
-    pool.query(query, params, (err, results) => {
-        if (err) {
-            console.error('Error al iniciar sesión:', err);
-            return res.status(500).json({ message: "Error al iniciar sesión", error: err });
-        }
-        if (results.length === 0) {
-            return res.status(401).json({ message: "Usuario o contraseña incorrectos" });
-        }
-        res.json({
-            message: "Inicio de sesión exitoso",
-            user: results[0]
-        });
-    });
 };
 
 // Función para actualizar un usuario
@@ -138,4 +180,5 @@ exports.deleteUser = (req, res) => {
         res.json({ message: "Usuario eliminado correctamente" });
     });
 };
+
 

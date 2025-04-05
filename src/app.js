@@ -51,6 +51,9 @@ app.put('/api/users/:id', UserController.updateUser);
 // Ruta para eliminar un usuario por ID
 app.delete('/api/users/:id', UserController.deleteUser);
 
+// Ruta para iniciar sesión
+app.post('/login', UserController.loginUser);
+
 // Archivos estáticos
 app.use(express.static(path.join(__dirname, '../public')));
 app.use('/pages', express.static(path.join(__dirname, '../public/pages')));
