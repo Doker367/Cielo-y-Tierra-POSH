@@ -8,7 +8,7 @@ class ProductModel {
                     producto_id,
                     nombre,
                     descripcion,
-                    imagen,
+                    REPLACE(imagen, '/public', '') AS imagen,
                     precio,
                     contenido_ml
                 FROM productos_posh
@@ -19,7 +19,19 @@ class ProductModel {
             throw error;
         }
     }
-}
 
+    static async getProductById(id) {
+        try {
+            const [rows] = await promisePool.query(
+                'SELECT * FROM productos_posh WHERE producto_id = ?',
+                [id]
+            );
+            return rows[0];
+        } catch (error) {
+            console.error('Error al obtener el producto por ID:', error);
+            throw error;
+        }
+    }
+}
 
 module.exports = ProductModel;

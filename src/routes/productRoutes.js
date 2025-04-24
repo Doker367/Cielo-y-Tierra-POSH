@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const ProductController = require('../controllers/productController');
 const usercontroller = require('../controllers/user.controllers');
+const CartController = require('../controllers/cartController');
 
 const { getUsers, getUser, createUser, updateUser, deleteUser } = require('../controllers/user.controllers');
 
@@ -20,18 +21,7 @@ router.get('/', async (req, res) => {
     }
 });
 // Obtener un producto por ID
-router.get('/:id', async (req, res) => {
-    try {
-        const product = await ProductController.getProductById(req.params.id);
-        if (!product) {
-            return res.status(404).json({ error: 'Producto no encontrado' });
-        }
-        res.json(product);
-    } catch (error) {
-        console.error('Error al obtener el producto:', error);
-        res.status(500).json({ error: 'Error al obtener el producto' });
-    }
-});
+router.get('/:id', ProductController.getProductById);
 
 // Ruta para crear un usuario
 router.post('/users', createUser);
@@ -44,5 +34,11 @@ router.put('/users/:id', updateUser);
 
 // Ruta para eliminar un usuario (DELETE)
 router.delete('/users/:id', deleteUser);
+
+// Route to add a product to the cart
+router.post('/cart', CartController.addToCart);
+
+// Route to get all products in the user's cart
+router.get('/cart/:userId', CartController.getCartByUserId);
 
 module.exports = router;

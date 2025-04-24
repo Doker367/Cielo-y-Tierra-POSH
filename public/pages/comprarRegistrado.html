@@ -37,9 +37,9 @@
           </a>
         </li>
         <li>
-          <button class="bg-transparent text-white hover:animate-bounce focus:outline-none">
+          <a href="/pages/favoritos.html" class="bg-transparent text-white hover:animate-bounce focus:outline-none">
             <img src="/images/icons/Heart.svg" alt="Heart Icon" class="w-6 h-6" />
-          </button>
+          </a>
         </li>
         <li>
           <button class="bg-transparent text-white hover:animate-bounce focus:outline-none">
@@ -156,6 +156,11 @@
                                     <path d="M6 5l14 1l-1 7h-13" />
                                 </svg>
                             </button>
+                            <button onclick="agregarAFavoritos(${producto.producto_id})" class="w-10 h-10 rounded-full bg-red-600 flex items-center justify-center shadow text-white">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 21l-1-1c-5-5-8-8-8-11a5 5 0 0 1 10 0a5 5 0 0 1 10 0c0 3-3 6-8 11l-1 1z" />
+                                </svg>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -169,9 +174,60 @@
             contenedor.innerHTML = productos.map(producto => crearTarjetaProducto(producto)).join('');
         }
         // Función para agregar al carrito
-        function agregarAlCarrito(productoId) {
-            console.log(`Producto ${productoId} agregado al carrito`);
-            // Implementar lógica del carrito aquí
+        async function agregarAlCarrito(productoId) {
+            try {
+                const usuarioId = 1; // ID del usuario actualmente autenticado (debe ser dinámico en producción)
+                const cantidad = 1; // Cantidad predeterminada
+
+                const response = await fetch('/api/cart', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ usuario_id: usuarioId, producto_id: productoId, cantidad })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    mostrarMensaje(data.message || 'Producto agregado al carrito con éxito');
+                } else {
+                    const errorData = await response.json();
+                    console.error('Error al agregar al carrito:', errorData.message);
+                    mostrarMensaje(errorData.message || 'Error al agregar al carrito');
+                }
+            } catch (error) {
+                console.error('Error al agregar al carrito:', error);
+                mostrarMensaje('Error al agregar al carrito. Inténtalo de nuevo más tarde.');
+            }
+        }
+
+        async function agregarAFavoritos(productoId) {
+            try {
+                const usuarioId = 36; // ID del usuario actualmente autenticado
+
+                const response = await fetch('/api/favorites', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ usuario_id: usuarioId, producto_id: productoId })
+                });
+
+                if (response.ok) {
+                    mostrarMensaje('Producto agregado a favoritos con éxito');
+                } else {
+                    console.error('Error al agregar a favoritos');
+                }
+            } catch (error) {
+                console.error('Error al agregar a favoritos:', error);
+            }
+        }
+
+        function mostrarMensaje(mensaje) {
+            const mensajeDiv = document.createElement('div');
+            mensajeDiv.textContent = mensaje;
+            mensajeDiv.className = 'fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-full shadow-lg';
+            document.body.appendChild(mensajeDiv);
+
+            setTimeout(() => {
+                mensajeDiv.remove();
+            }, 3000);
         }
 
         // Lógica del carrusel

@@ -29,15 +29,6 @@
             Inicio</a>
         </li>
         <li>
-          <a href="/pages/nosotros.html" class="w-16 md:w-32 lg:w-48 text-white hover:text-white transition duration-100 hover:underline hover:underline-offset-4 hover:decoration-blue-500">Acerca de nosotros</a>
-        </li>
-        <li>
-            <a href="/pages/comprar.html" class="flex items-center bg-red-700 text-white px-1 py-1 pb-1 pt-1 rounded-lg shadow-md hover:bg-red-500 transition">
-              <img src="/images/icons/Cart.gif" alt="Login Icon" class="w-6 h-6 mr-2 hover:animate-bounce" />
-              Comprar Ahora
-            </a>
-          </li>
-        <li>
           <a href="/pages/inisiosesion.html" class="flex items-center text-white hover:text-white transition duration-100 hover:underline hover:underline-offset-4 hover:decoration-blue-500">
             <img src="/images/icons/Register.gif" alt="Login Icon" class="w-6 h-6 mr-2 hover:animate-bounce" />
             Iniciar Sesión
@@ -166,9 +157,51 @@
             contenedor.innerHTML = productos.map(producto => crearTarjetaProducto(producto)).join('');
         }
         // Función para agregar al carrito
-        function agregarAlCarrito(productoId) {
-            console.log(`Producto ${productoId} agregado al carrito`);
-            // Implementar lógica del carrito aquí
+        async function agregarAlCarrito(productoId) {
+            try {
+                const response = await fetch('/api/cart', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ productoId })
+                });
+                if (response.ok) {
+                    mostrarMensaje('Producto agregado al carrito correctamente');
+                } else {
+                    console.error('Error al agregar al carrito');
+                }
+            } catch (error) {
+                console.error('Error al agregar al carrito:', error);
+            }
+        }
+
+        // Función para agregar a favoritos
+        async function agregarAFavoritos(productoId) {
+            try {
+                const response = await fetch('/api/favorites', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ productoId })
+                });
+                if (response.ok) {
+                    mostrarMensaje('Producto agregado a favoritos correctamente');
+                } else {
+                    console.error('Error al agregar a favoritos');
+                }
+            } catch (error) {
+                console.error('Error al agregar a favoritos:', error);
+            }
+        }
+
+        // Función para mostrar mensajes de confirmación
+        function mostrarMensaje(mensaje) {
+            const mensajeDiv = document.createElement('div');
+            mensajeDiv.textContent = mensaje;
+            mensajeDiv.className = 'fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded shadow-lg';
+            document.body.appendChild(mensajeDiv);
+
+            setTimeout(() => {
+                mensajeDiv.remove();
+            }, 3000);
         }
 
         // Lógica del carrusel

@@ -1,49 +1,254 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <link rel="stylesheet" href="globals.css" />
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <div class="frame">
-      <div class="div">
-        <div class="overlap">
-          <div class="text-wrapper">Cielo y Tierra</div>
-          <div class="text-wrapper-2">Inicio</div>
-          <div class="group-wrapper">
-            <div class="group">
-              <div class="overlap-group"><div class="text-wrapper-3">Comprar Ahora</div></div>
-            </div>
-          </div>
-          <div class="text-wrapper-4">Acerca de nosotros</div>
-        </div>
-        <div class="overlap-2">
-          <img class="inicio" src="img/inicio1-1.png" />
-          <p class="bebidas-qu-es-el">Bebidas ¿Qué es el “posh”?<br />Sabor de Chiapas en cada sorbo</p>
-          <p class="un-veh-culo-de">
-            Un vehículo de tradición y espiritualidad que ha perdurado a través de los siglos<br />entre las comunidades
-            indígenas tsotsiles y tseltales.
-          </p>
-          <div class="rectangle"></div>
-          <div class="rectangle-2"></div>
-          <div class="rectangle-3"></div>
-          <p class="el-alcohol-por-sus">
-            El Alcohol por sus bondades curativas desempeñó un papel clave en las austeras<br />intervenciones médicas
-            que se realizaban en tierras Chiapanecas en el periodo Colonial.<br />Además, el Posh fue ganando fama al
-            ser un remedio efectivo para curar las dolencias del alma como el miedo, la tristeza y la falta de coraje, y
-            por otra parte proporcionaba un medio para desinfectar heridas si se aplicaba en la piel.
-          </p>
-          <p class="p">
-            Recibimos a Alan Estrada creador de uno de los canales con más influencia para turismo de Experiencias en
-            México
-          </p>
-          <img class="img" src="img/inicio2-1.png" />
-          <p class="text-wrapper-5">El Posh: Medicina para el Cuerpo y para el Alma</p>
-          <p class="text-wrapper-6">ALAN POR EL MUNDO EN NUESTRO SHOWROOM</p>
-          <img class="image" src="img/image-1.png" />
-        </div>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>CIELO Y TIERRA</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
+  <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+    }
+    nav.fixed {
+      top: 0;
+      left: 0;
+      width: 100%;
+    }
+    .content {
+      margin-top: 64px; /* Ajusta este valor según la altura del navbar */
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="fixed w-full bg-black p-4 z-50">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+      <div class="text-2xl font-bold">
+        <a href="#" class="text-white fond-mono ">Cielo y Tierra</a>
+      </div>
+      <ul class="flex space-x-4 md:space-x-8 items-center">
+        <li>
+          <a href="#" class="text-white hover:text-white transition duration-100 hover:underline hover:underline-offset-4 hover:decoration-blue-500">
+            Inicio</a>
+        </li>
+        <li>
+          <a href="/pages/comprar.html" class="flex items-center bg-red-700 text-white px-1 py-1 pb-1 pt-1 rounded-lg shadow-md hover:bg-red-500 transition">
+            <img src="/images/icons/Cart.gif" alt="Login Icon" class="w-6 h-6 mr-2 hover:animate-bounce" />
+            Comprar Ahora
+          </a>
+        </li>
+        <li>
+          <a href="/pages/nosotros.html" class="w-16 md:w-32 lg:w-48 text-white hover:text-white transition duration-100 hover:underline hover:underline-offset-4 hover:decoration-blue-500">Acerca de nosotros</a>
+        </li>
+
+      </ul>
+    </div>
+  </nav>
+  
+  <!-- Contenedor del carrito -->
+  <div class="content max-w-6xl mx-auto p-4">
+    <h1 class="text-2xl font-bold mb-4">Carrito de Compras</h1>
+    <table class="table-auto w-full border-collapse border border-gray-300">
+      <thead>
+        <tr class="bg-gray-200">
+          <th class="border border-gray-300 px-4 py-2">Producto</th>
+          <th class="border border-gray-300 px-4 py-2">Precio</th>
+          <th class="border border-gray-300 px-4 py-2">Cantidad</th>
+          <th class="border border-gray-300 px-4 py-2">Total</th>
+        </tr>
+      </thead>
+      <tbody id="carrito-body">
+        <!-- Las filas se generarán dinámicamente aquí -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Footer fijo con botón de comprar y total del carrito -->
+  <footer class="fixed bottom-0 left-0 w-full bg-gray-800 text-white p-4 flex justify-between items-center z-50">
+    <div class="text-lg font-bold">
+      Total: <span id="total-carrito">$0.00</span>
+    </div>
+    <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+      Comprar
+    </button>
+  </footer>
+
+  <!-- Modal para mostrar el ticket de compra -->
+  <div id="modal-ticket" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg shadow-lg p-6 w-96">
+      <h2 class="text-xl font-bold mb-4">Ticket de Compra</h2>
+      <div id="ticket-productos" class="mb-4">
+        <!-- Los productos se generarán dinámicamente aquí -->
+      </div>
+      <div class="text-lg font-bold mb-4">
+        Total: <span id="ticket-total">$0.00</span>
+      </div>
+      <div class="flex space-x-4">
+        <button id="cerrar-modal" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded w-full">Cerrar</button>
+        <button id="confirmar-compra" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full">Confirmar</button>
       </div>
     </div>
-  </body>
+  </div>
+
+  <script>
+    // Función para registrar un producto en la base de datos
+    async function registrarProducto(producto) {
+      try {
+        const response = await fetch('/api/cart', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(producto)
+        });
+        if (response.ok) {
+          console.log('Producto registrado correctamente');
+          cargarCarrito();
+        } else {
+          console.error('Error al registrar el producto');
+        }
+      } catch (error) {
+        console.error('Error al registrar el producto:', error);
+      }
+    }
+
+    // Función para cargar los productos del carrito desde la base de datos
+    async function cargarCarrito() {
+        try {
+            const usuarioId = 1; // ID del usuario actualmente autenticado (actualizado dinámicamente)
+            const response = await fetch(`/api/cart/${usuarioId}`);
+            if (!response.ok) {
+                console.error('Error al obtener el carrito');
+                return;
+            }
+
+            const productos = await response.json();
+            const carritoBody = document.getElementById('carrito-body');
+            carritoBody.innerHTML = '';
+
+            productos.forEach(producto => {
+                const fila = document.createElement('tr');
+                fila.innerHTML = `
+                    <td class="border border-gray-300 px-4 py-2">${producto.nombre}</td>
+                    <td class="border border-gray-300 px-4 py-2">${producto.precio}</td>
+                    <td class="border border-gray-300 px-4 py-2">${producto.cantidad}</td>
+                    <td class="border border-gray-300 px-4 py-2">${producto.total}</td>
+                `;
+                carritoBody.appendChild(fila);
+            });
+
+            actualizarTotalCarrito(); // Actualizar el total después de cargar el carrito
+        } catch (error) {
+            console.error('Error al cargar el carrito:', error);
+        }
+    }
+
+    // Actualizar el total del carrito dinámicamente
+    function actualizarTotalCarrito() {
+      const carritoBody = document.getElementById('carrito-body');
+      const filas = carritoBody.querySelectorAll('tr');
+      let total = 0;
+
+      filas.forEach(fila => {
+        const totalCelda = fila.querySelector('td:last-child');
+        if (totalCelda) {
+          total += parseFloat(totalCelda.textContent) || 0;
+        }
+      });
+
+      document.getElementById('total-carrito').textContent = `$${total.toFixed(2)}`;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      cargarCarrito(); // Cargar el carrito
+      actualizarTotalCarrito(); // Actualizar el total al cargar
+    });
+
+    // Mostrar el modal con los productos y el total
+    document.querySelector('footer button').addEventListener('click', () => {
+      const modal = document.getElementById('modal-ticket');
+      const ticketProductos = document.getElementById('ticket-productos');
+      const ticketTotal = document.getElementById('ticket-total');
+
+      const carritoBody = document.getElementById('carrito-body');
+      const filas = carritoBody.querySelectorAll('tr');
+      let total = 0;
+
+      ticketProductos.innerHTML = '';
+
+      filas.forEach(fila => {
+        const producto = fila.querySelector('td:first-child').textContent;
+        const precio = fila.querySelector('td:nth-child(2)').textContent;
+        const cantidad = fila.querySelector('td:nth-child(3)').textContent;
+        const subtotal = fila.querySelector('td:last-child').textContent;
+
+        total += parseFloat(subtotal) || 0;
+
+        const productoDiv = document.createElement('div');
+        productoDiv.className = 'flex justify-between mb-2';
+        productoDiv.innerHTML = `
+          <span>${producto} (x${cantidad})</span>
+          <span>${subtotal}</span>
+        `;
+        ticketProductos.appendChild(productoDiv);
+      });
+
+      ticketTotal.textContent = `$${total.toFixed(2)}`;
+      modal.classList.remove('hidden');
+    });
+
+    // Cerrar el modal
+    document.getElementById('cerrar-modal').addEventListener('click', () => {
+      document.getElementById('modal-ticket').classList.add('hidden');
+    });
+
+    // Confirmar la compra y enviar correo
+    document.getElementById('confirmar-compra').addEventListener('click', async () => {
+      try {
+        const carritoBody = document.getElementById('carrito-body');
+        const filas = carritoBody.querySelectorAll('tr');
+        const productos = [];
+
+        filas.forEach(fila => {
+          const producto = fila.querySelector('td:first-child').textContent;
+          const precio = fila.querySelector('td:nth-child(2)').textContent;
+          const cantidad = fila.querySelector('td:nth-child(3)').textContent;
+          const subtotal = fila.querySelector('td:last-child').textContent;
+
+          productos.push({ producto, precio, cantidad, subtotal });
+        });
+
+        const response = await fetch('/api/send-email', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ productos })
+        });
+
+        if (response.ok) {
+          alert('Compra confirmada. Se ha enviado un correo con los detalles.');
+          document.getElementById('modal-ticket').classList.add('hidden');
+        } else {
+          alert('Error al confirmar la compra. Inténtalo de nuevo.');
+        }
+      } catch (error) {
+        console.error('Error al confirmar la compra:', error);
+        alert('Error al confirmar la compra. Inténtalo de nuevo.');
+      }
+    });
+
+    // Función para mostrar un mensaje con esquinas redondeadas
+    function mostrarMensajeExito(mensaje) {
+        const mensajeDiv = document.createElement('div');
+        mensajeDiv.textContent = mensaje;
+        mensajeDiv.className = 'fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg';
+        document.body.appendChild(mensajeDiv);
+
+        setTimeout(() => {
+            mensajeDiv.remove();
+        }, 3000);
+    }
+  </script>
+</body>
 </html>

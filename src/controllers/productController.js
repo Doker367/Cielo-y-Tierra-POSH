@@ -1,4 +1,5 @@
 const ProductModel = require('../models/productModel');
+
 class ProductController {
     static async getProducts() {
         try {
@@ -16,5 +17,23 @@ class ProductController {
             throw error;
         }
     }
+
+    static async getProductById(req, res) {
+        try {
+            const { id } = req.params;
+            if (!id) {
+                return res.status(400).json({ message: 'El parámetro id es requerido' });
+            }
+            const product = await ProductModel.getProductById(id);
+            if (!product) {
+                return res.status(404).json({ message: 'Producto no encontrado' });
+            }
+            return res.status(200).json(product);
+        } catch (error) {
+            console.error('Error al obtener el producto:', error);
+            return res.status(500).json({ message: 'Error interno del servidor al obtener el producto' });
+        }
+    }
 }
+
 module.exports = ProductController;

@@ -2,8 +2,18 @@ const express = require('express');
 const exphbs = require('express-handlebars');
 const path = require('path');
 const productRoutes = require('./routes/productRoutes');
+const sendEmailRoutes = require('./routes/sendEmailRoutes');
+const favoritesRoutes = require('./routes/favoritesRoutes');
+const cors = require('cors');
 
 const app = express();
+
+// Habilitar CORS
+app.use(cors({
+    origin: 'http://localhost:4000', // Permitir solicitudes desde este origen
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Métodos permitidos
+    credentials: true // Permitir el envío de cookies si es necesario
+}));
 
 // Configuración de Handlebars
 app.engine('.hbs', exphbs.engine({ extname: '.hbs', defaultLayout: 'main' }));
@@ -54,11 +64,24 @@ app.delete('/api/users/:id', UserController.deleteUser);
 // Ruta para iniciar sesión
 app.post('/login', UserController.loginUser);
 
+const cartController = require('./controllers/cartController');
+
+// Middleware para depurar solicitudes a /api/cart
+app.post('/api/cart', (req, res, next) => {
+    console.log('Solicitud recibida en /api/cart:', req.body);
+    next();
+}, cartController.addToCart);
+
+// Ruta para obtener el carrito por ID de usuario
+app.get('/api/cart/:userId', cartController.getCartByUserId);
+
 // Archivos estáticos
 app.use(express.static(path.join(__dirname, '../public')));
 app.use('/pages', express.static(path.join(__dirname, '../public/pages')));
 
 // Rutas de la API
 app.use('/api', productRoutes);
+app.use('/api', sendEmailRoutes);
+app.use('/api/favorites', favoritesRoutes);
 
 module.exports = app;

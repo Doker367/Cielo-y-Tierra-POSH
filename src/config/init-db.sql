@@ -61,6 +61,27 @@ CREATE TABLE usuarios (
     fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- Fecha de registro
 );
 
+-- Crear tabla de favoritos
+CREATE TABLE favoritos (
+    id_favorito INT PRIMARY KEY AUTO_INCREMENT,
+    id_usuario INT NOT NULL,
+    id_producto INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id),
+    FOREIGN KEY (id_producto) REFERENCES productos_posh(producto_id)
+);
+
+-- Crear tabla de carrito
+CREATE TABLE IF NOT EXISTS carrito (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT NOT NULL,
+    producto_id INT NOT NULL,
+    cantidad INT DEFAULT 1,
+    fecha_agregado TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
+    FOREIGN KEY (producto_id) REFERENCES productos_posh(producto_id)
+);
+
 -- Insertar datos de ejemplo en categorías
 INSERT INTO categorias_posh (nombre, descripcion) VALUES
 ('Posh Tradicional', 'Bebidas tradicionales de posh sin sabores añadidos'),
