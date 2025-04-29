@@ -176,13 +176,22 @@
         // Función para agregar al carrito
         async function agregarAlCarrito(productoId) {
             try {
-                const usuarioId = 1; // ID del usuario actualmente autenticado (debe ser dinámico en producción)
+                const token = localStorage.getItem('token'); // Obtener el token almacenado en localStorage
+                if (!token) {
+                    console.error('No se encontró un token de autenticación');
+                    mostrarMensaje('No se encontró un token de autenticación. Por favor, inicia sesión.');
+                    return;
+                }
+
                 const cantidad = 1; // Cantidad predeterminada
 
                 const response = await fetch('/api/cart', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ usuario_id: usuarioId, producto_id: productoId, cantidad })
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}` // Enviar el token en el encabezado Authorization
+                    },
+                    body: JSON.stringify({ producto_id: productoId, cantidad })
                 });
 
                 if (response.ok) {

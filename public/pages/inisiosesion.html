@@ -95,6 +95,9 @@
                 }
 
                 // Login exitoso
+                if (result.token) {
+                    localStorage.setItem('token', result.token); // Almacenar el token en localStorage
+                }
                 showSuccess('¡Bienvenido! Redirigiendo...');
                 setTimeout(() => {
                     window.location.href = '/pages/comprarRegistrado.html'; // Redirigir a comprarRegistrado.html

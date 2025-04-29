@@ -1,6 +1,7 @@
 // src/controllers/user.controller.js
 const { pool, promisePool } = require('../config/db'); // Importar el pool de conexiones y el pool de promesas
 const bcrypt = require('bcrypt'); // Importar bcrypt para cifrar contraseñas
+const jwt = require('jsonwebtoken'); // Importar JWT para manejar tokens
 
 // Función para obtener todos los usuarios
 exports.getUsers = (req, res) => {
@@ -77,32 +78,24 @@ exports.createUser = async (req, res) => {
 
 // Función para iniciar sesión
 exports.loginUser = async (req, res) => {
-    console.log("Datos recibidos para login:", req.body); // Debug 1
-    
     try {
         const { correo, nombre_usuario, contrasena } = req.body;
 
-        // Validación mejorada
         if (!contrasena || (!correo && !nombre_usuario)) {
-            console.log("Faltan campos requeridos"); // Debug 2
             return res.status(400).json({
                 code: 4001,
                 message: "Debes proporcionar (correo o nombre de usuario) y contraseña",
             });
         }
 
-        // Buscar usuario
         const query = correo 
             ? "SELECT * FROM usuarios WHERE correo = ?"
             : "SELECT * FROM usuarios WHERE nombre_usuario = ?";
-        
-        const params = [correo || nombre_usuario];
-        console.log("Query a ejecutar:", query, params); // Debug 3
 
+        const params = [correo || nombre_usuario];
         const [users] = await promisePool.query(query, params);
-        
+
         if (users.length === 0) {
-            console.log("Usuario no encontrado"); // Debug 4
             return res.status(404).json({
                 code: 4004,
                 message: "Usuario no encontrado",
@@ -110,27 +103,20 @@ exports.loginUser = async (req, res) => {
         }
 
         const user = users[0];
-        console.log("Usuario encontrado (sin contraseña):", { 
-            id: user.id, 
-            nombre_usuario: user.nombre_usuario, 
-            correo: user.correo 
-        }); // Debug 5
-
-        // Comparar contraseñas (asumiendo que están hasheadas)
-        const bcrypt = require('bcrypt');
         const match = await bcrypt.compare(contrasena, user.contrasena);
         if (!match) {
-            console.log("Contraseña incorrecta"); // Debug 6
             return res.status(401).json({
                 code: 4003,
                 message: "Contraseña incorrecta",
             });
         }
 
-        // Éxito
-        console.log("Login exitoso para usuario ID:", user.id); // Debug 7
+        // Generar un token JWT
+        const token = jwt.sign({ id: user.id, email: user.correo }, 'secreto', { expiresIn: '1h' });
+
         res.json({
             success: true,
+            token,
             user: {
                 id: user.id,
                 nombre_usuario: user.nombre_usuario,
@@ -139,8 +125,6 @@ exports.loginUser = async (req, res) => {
         });
 
     } catch (error) {
-        console.error("Error completo en login:", error); // Debug 8
-        
         res.status(500).json({
             code: 5000,
             message: "Error interno del servidor",
@@ -178,6 +162,34 @@ exports.deleteUser = (req, res) => {
             return res.status(404).json({ message: "Usuario no encontrado" });
         }
         res.json({ message: "Usuario eliminado correctamente" });
+    });
+};
+
+// Función para obtener el usuario autenticado desde el token
+exports.getAuthenticatedUser = (req, res) => {
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+        return res.status(401).json({ message: "No se proporcionó un token" });
+    }
+    
+
+    const token = authHeader.split(' ')[1];
+    jwt.verify(token, 'secreto', (err, user) => {
+        if (err) {
+            return res.status(403).json({ message: "Token no válido" });
+        }
+
+        const query = "SELECT id, nombre_usuario, correo FROM usuarios WHERE id = ?";
+        pool.query(query, [user.id], (err, results) => {
+            if (err) {
+                console.error('Error al obtener el usuario autenticado:', err);
+                return res.status(500).json({ message: "Error al obtener usuario autenticado", error: err });
+            }
+            if (results.length === 0) {
+                return res.status(404).json({ message: "Usuario no encontrado" });
+            }
+            res.json(results[0]);
+        });
     });
 };
 

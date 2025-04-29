@@ -1,16 +1,41 @@
 const { promisePool } = require('../config/db');
+const jwt = require('jsonwebtoken');
 
 class CartController {
     static async addToCart(req, res) {
         try {
-            const { usuario_id, producto_id, cantidad } = req.body;
-            console.log('Datos recibidos para agregar al carrito:', { usuario_id, producto_id, cantidad });
+            const { producto_id, cantidad } = req.body;
+            console.log('Datos recibidos para agregar al carrito:', { producto_id, cantidad });
 
-            if (!usuario_id || !producto_id || !cantidad) {
-                return res.status(400).json({ message: 'Todos los campos (usuario_id, producto_id, cantidad) son requeridos' });
+            if (!producto_id || !cantidad) {
+                return res.status(400).json({ message: 'Todos los campos (producto_id, cantidad) son requeridos' });
             }
 
             console.log('Iniciando proceso para agregar al carrito...');
+
+            // Obtener el ID del usuario autenticado desde el token JWT
+            const authHeader = req.headers.authorization;
+            console.log('Encabezado Authorization recibido:', authHeader); // Registro del encabezado Authorization
+            if (!authHeader) {
+                return res.status(401).json({ message: 'No se proporcionó un token de autenticación' });
+            }
+
+            const token = authHeader.split(' ')[1];
+            console.log('Token JWT recibido:', token); // Registro del token JWT
+            let usuario_id;
+            try {
+                const decoded = jwt.verify(token, 'secreto'); // Verificar y decodificar el token
+                usuario_id = decoded.id;
+                console.log('ID del usuario extraído del token:', usuario_id); // Registro del ID del usuario
+            } catch (error) {
+                console.error('Error al verificar el token JWT:', error);
+                return res.status(403).json({ message: 'Token no válido' });
+            }
+
+            // Ignorar cualquier usuario_id enviado en el cuerpo de la solicitud
+            if (req.body.usuario_id) {
+                console.warn('El usuario_id enviado en el cuerpo será ignorado.');
+            }
 
             // Verificar si el usuario existe antes de agregar al carrito
             console.log('Verificando si el usuario existe en la base de datos...');

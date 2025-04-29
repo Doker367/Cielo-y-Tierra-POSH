@@ -4,7 +4,7 @@ const ProductController = require('../controllers/productController');
 const usercontroller = require('../controllers/user.controllers');
 const CartController = require('../controllers/cartController');
 
-const { getUsers, getUser, createUser, updateUser, deleteUser } = require('../controllers/user.controllers');
+const { getUsers, getUser, createUser, updateUser, deleteUser, getAuthenticatedUser } = require('../controllers/user.controllers');
 
 // Middleware para analizar JSON y datos codificados en URL
 router.use(express.json());
@@ -34,6 +34,9 @@ router.put('/users/:id', updateUser);
 
 // Ruta para eliminar un usuario (DELETE)
 router.delete('/users/:id', deleteUser);
+
+// Ruta para obtener el usuario autenticado
+router.get('/auth/user', getAuthenticatedUser);
 
 // Route to add a product to the cart
 router.post('/cart', CartController.addToCart);

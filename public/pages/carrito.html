@@ -98,11 +98,22 @@
     // Función para registrar un producto en la base de datos
     async function registrarProducto(producto) {
       try {
+        const token = localStorage.getItem('token'); // Obtener el token almacenado en localStorage
+        console.log('Token obtenido de localStorage:', token); // Agregar registro de depuración
+        if (!token) {
+          console.error('No se encontró un token de autenticación');
+          return;
+        }
+
         const response = await fetch('/api/cart', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(producto)
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}` // Enviar el token en el encabezado Authorization
+          },
+          body: JSON.stringify({ producto_id: producto.producto_id, cantidad: producto.cantidad })
         });
+
         if (response.ok) {
           console.log('Producto registrado correctamente');
           cargarCarrito();
@@ -114,10 +125,45 @@
       }
     }
 
-    // Función para cargar los productos del carrito desde la base de datos
+    // Función para obtener el ID del usuario autenticado desde el token
+    async function obtenerUsuarioId() {
+        try {
+            const token = localStorage.getItem('token'); // Obtener el token almacenado en localStorage
+            console.log('Token obtenido de localStorage:', token); // Agregar registro de depuración
+            if (!token) {
+                console.error('No se encontró un token de autenticación');
+                return null;
+            }
+
+            const response = await fetch('/api/auth/user', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}` // Enviar el token en el encabezado Authorization
+                }
+            });
+
+            if (response.ok) {
+                const usuario = await response.json();
+                return usuario.id; // Retorna el ID del usuario
+            } else {
+                console.error('Error al obtener el usuario autenticado');
+                return null;
+            }
+        } catch (error) {
+            console.error('Error al obtener el usuario autenticado:', error);
+            return null;
+        }
+    }
+
+    // Modificar cargarCarrito para usar el ID del usuario autenticado
     async function cargarCarrito() {
         try {
-            const usuarioId = 1; // ID del usuario actualmente autenticado (actualizado dinámicamente)
+            const usuarioId = await obtenerUsuarioId(); // Obtener el ID del usuario autenticado
+            if (!usuarioId) {
+                console.error('No se pudo obtener el ID del usuario');
+                return;
+            }
+
             const response = await fetch(`/api/cart/${usuarioId}`);
             if (!response.ok) {
                 console.error('Error al obtener el carrito');
@@ -239,9 +285,9 @@
     });
 
     // Función para mostrar un mensaje con esquinas redondeadas
-    function mostrarMensajeExito(mensaje) {
+    function mostrarMensajeExito(correctamente) {
         const mensajeDiv = document.createElement('div');
-        mensajeDiv.textContent = mensaje;
+        mensajeDiv.textContent = correctamente;
         mensajeDiv.className = 'fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg';
         document.body.appendChild(mensajeDiv);
 
