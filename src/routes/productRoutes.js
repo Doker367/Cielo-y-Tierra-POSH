@@ -44,4 +44,10 @@ router.post('/cart', CartController.addToCart);
 // Route to get all products in the user's cart
 router.get('/cart/:userId', CartController.getCartByUserId);
 
+// Route to update the quantity of a product in the cart
+router.put('/cart', CartController.updateCartQuantity);
+
+// Route to delete a product from the cart
+router.delete('/cart', CartController.deleteFromCart);
+
 module.exports = router;

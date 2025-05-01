@@ -11,6 +11,36 @@
   <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/styles/animations.css"> <!-- Mover estilos en línea a un archivo externo -->
+<style>
+    /* Agregar efecto de neón azul al hover de los enlaces del navbar */
+    .navbar-link {
+      position: relative;
+      text-shadow: none; /* Eliminar cualquier efecto en las letras */
+      transition: none; /* Evitar cambios en las letras */
+    }
+
+    .navbar-link:hover {
+      text-shadow: none; /* Asegurar que las letras no cambien al pasar el cursor */
+    }
+
+    .navbar-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      color: blue;
+      background-color: #00f;
+      box-shadow: 0 5px 15px rgba(0, 0, 255, 0.7); /* Sombra azul difuminada hacia abajo */
+      transition: width 0.3s ease-in-out;
+    }
+
+    .navbar-link:hover::after {
+      width: 100%;
+    }
+
+  </style>
 </head>
 <body>
   <!-- Contenedor que abarca toda la pantalla con la imagen de fondo -->
@@ -23,17 +53,17 @@
       </div>
       <ul class="flex space-x-4 md:space-x-8 items-center">
         <li>
-          <a href="#" class="text-white hover:text-white transition duration-100 hover:underline hover:underline-offset-4 hover:decoration-blue-500">
+          <a href="#" class="text-white hover:text-white transition duration-100 hover:underline hover:underline-offset-4 hover:decoration-blue-500 navbar-link">
             Inicio</a>
         </li>
         <li>
-          <a href="/pages/comprar.html" class="flex items-center bg-red-700 text-white px-1 py-1 pb-1 pt-1 rounded-lg shadow-md hover:bg-red-500 transition">
+          <a href="/pages/comprar.html" class="flex items-center bg-red-700 text-white px-1 py-1 pb-1 pt-1 rounded-lg shadow-md hover:bg-red-500 transition navbar-link">
             <img src="/images/icons/Cart.gif" alt="Login Icon" class="w-6 h-6 mr-2 hover:animate-bounce" />
             Comprar Ahora
           </a>
         </li>
         <li>
-          <a href="/pages/nosotros.html" class="w-16 md:w-32 lg:w-48 text-white hover:text-white transition duration-100 hover:underline hover:underline-offset-4 hover:decoration-blue-500">Acerca de nosotros</a>
+          <a href="/pages/nosotros.html" class="w-16 md:w-32 lg:w-48 text-white hover:text-white transition duration-100 hover:underline hover:underline-offset-4 hover:decoration-blue-500 navbar-link">Acerca de nosotros</a>
         </li>
 
       </ul>

@@ -29,9 +29,6 @@
             Inicio</a>
         </li>
         <li>
-          <a href="/pages/nosotros.html" class="w-16 md:w-32 lg:w-48 text-white hover:text-white transition duration-100 hover:underline hover:underline-offset-4 hover:decoration-blue-500">Acerca de nosotros</a>
-        </li>
-        <li>
           <a href="/pages/carrito.html" class="bg-transparent text-white hover:animate-bounce focus:outline-none">
             <img src="/images/icons/Cart.svg" alt="Cart Icon" class="w-6 h-6" />
           </a>
@@ -59,11 +56,11 @@
                     class="w-full h-96 object-cover">
             </div>
             <div class="carousel-item">
-                <img src="/images/c2.jpg" alt="Carousel Image 2"
+                <img src="/images/ns1.jpg" alt="Carousel Image 2"
                     class="w-full h-96 object-cover">
             </div>
             <div class="carousel-item">
-                <img src="/images/inicio3.jpg" alt="Carousel Image 3"
+                <img src="/images/ns2.jpg" alt="Carousel Image 2"
                     class="w-full h-96 object-cover">
             </div>
         </div>
@@ -250,6 +247,8 @@
             function showItem(index) {
                 items.forEach((item, i) => {
                     item.style.transform = `translateX(${100 * (i - index)}%)`;
+                    item.style.display = i === index ? 'block' : 'none';
+                    item.style.transition = 'transform 0.8s cubic-bezier(0.25, 1, 0.5, 1)'; // Mejora de la animación
                 });
             }
 
@@ -262,6 +261,12 @@
                 currentIndex = (currentIndex < items.length - 1) ? currentIndex + 1 : 0;
                 showItem(currentIndex);
             });
+
+            // Mover automáticamente cada 2 segundos
+            setInterval(() => {
+                currentIndex = (currentIndex < items.length - 1) ? currentIndex + 1 : 0;
+                showItem(currentIndex);
+            }, 2000);
 
             showItem(currentIndex); // Mostrar el primer elemento inicialmente
         });

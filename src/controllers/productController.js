@@ -5,12 +5,12 @@ class ProductController {
         try {
             const products = await ProductModel.getAllProducts();
             return products.map(producto => ({
-                producto_id: producto.producto_id,
+                producto_id: producto.id_producto,
                 nombre: producto.nombre,
                 descripcion: producto.descripcion,
                 precio: parseFloat(producto.precio),
                 imagen: producto.imagen,
-                descuento: Math.round(((producto.precio_regular - producto.precio_descuento) / producto.precio_regular) * 100)
+                descuento: Math.round(((producto.precio_regular - producto.precio_descuento) / producto.precio_regular) * 100) || 0
             }));
         } catch (error) {
             console.error('Error en el controlador:', error);

@@ -36,7 +36,7 @@
         </li>
       </ul>
     </div>
-  </nav>
+  </nav>|
 
     <!-- Carrusel -->
     <div class="relative "> <!-- Añadido mt-20 para dar espacio debajo de la navbar -->
@@ -47,11 +47,11 @@
                     class="w-full h-96 object-cover">
             </div>
             <div class="carousel-item">
-                <img src="/images/c2.jpg" alt="Carousel Image 2"
+                <img src="/images/ns1.jpg" alt="Carousel Image 2"
                     class="w-full h-96 object-cover">
             </div>
             <div class="carousel-item">
-                <img src="/images/inicio3.jpg" alt="Carousel Image 3"
+                <img src="/images/ns2.jpg" alt="Carousel Image 2"
                     class="w-full h-96 object-cover">
             </div>
         </div>
@@ -125,11 +125,15 @@
                             -${producto.descuento || 0}%
                         </span>
                         <div>
-                            <img src="${producto.imagen}" alt="${producto.nombre}" class="object-contain w-full h-48">
+                            <a href="/pages/productoCard.html?producto_id=${producto.producto_id}">
+                                <img src="${producto.imagen}" alt="${producto.nombre}" class="object-contain w-full h-48 cursor-pointer hover:scale-105 transition-transform duration-200">
+                            </a>
                         </div>
                     </div>
                     <div class="mt-4">
-                        <h3 class="text-gray-800 font-medium text-base">${producto.nombre}</h3>
+                        <h3 class="text-gray-800 font-medium text-base">
+                            <a href="/pages/productoCard.html?producto_id=${producto.producto_id}" class="hover:underline">${producto.nombre}</a>
+                        </h3>
                         <p class="uppercase text-green-600 text-xs font-medium">${producto.descripcion}</p>
                         <div class="flex items-baseline space-x-2 mt-2">
                             <span class="text-blue-600 text-xl font-semibold">${producto.precio.toFixed(2)}</span>
@@ -158,20 +162,8 @@
         }
         // Función para agregar al carrito
         async function agregarAlCarrito(productoId) {
-            try {
-                const response = await fetch('/api/cart', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ productoId })
-                });
-                if (response.ok) {
-                    mostrarMensaje('Producto agregado al carrito correctamente');
-                } else {
-                    console.error('Error al agregar al carrito');
-                }
-            } catch (error) {
-                console.error('Error al agregar al carrito:', error);
-            }
+            // Redirigir a la página de registro
+            window.location.href = '/pages/registro.html';
         }
 
         // Función para agregar a favoritos
@@ -215,6 +207,8 @@
             function showItem(index) {
                 items.forEach((item, i) => {
                     item.style.transform = `translateX(${100 * (i - index)}%)`;
+                    item.style.display = i === index ? 'block' : 'none';
+                    item.style.transition = 'transform 0.8s cubic-bezier(0.25, 1, 0.5, 1)'; // Mejora de la animación
                 });
             }
 
@@ -227,6 +221,12 @@
                 currentIndex = (currentIndex < items.length - 1) ? currentIndex + 1 : 0;
                 showItem(currentIndex);
             });
+
+            // Mover automáticamente cada 2 segundos
+            setInterval(() => {
+                currentIndex = (currentIndex < items.length - 1) ? currentIndex + 1 : 0;
+                showItem(currentIndex);
+            }, 2000);
 
             showItem(currentIndex); // Mostrar el primer elemento inicialmente
         });

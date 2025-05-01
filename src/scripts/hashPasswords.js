@@ -21,4 +21,4 @@ const bcrypt = require('bcrypt');
         console.error("Error al actualizar contraseñas:", error);
         process.exit(1);
     }
-})();
+})();       

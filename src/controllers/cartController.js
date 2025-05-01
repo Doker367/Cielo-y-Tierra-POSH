@@ -87,6 +87,75 @@ class CartController {
             res.status(500).json({ message: 'Error al obtener el carrito' });
         }
     }
+
+    static async updateCartQuantity(req, res) {
+        try {
+            const { producto_id, cantidad } = req.body;
+            const authHeader = req.headers.authorization;
+            if (!authHeader) {
+                return res.status(401).json({ message: 'No se proporcionó un token de autenticación' });
+            }
+
+            const token = authHeader.split(' ')[1];
+            let usuario_id;
+            try {
+                const decoded = jwt.verify(token, 'secreto');
+                usuario_id = decoded.id;
+            } catch (error) {
+                return res.status(403).json({ message: 'Token no válido' });
+            }
+
+            console.log('Cantidad recibida:', cantidad);
+            console.log('Producto ID recibido:', producto_id);
+            console.log('Usuario ID:', usuario_id);
+
+            if (cantidad === 0) {
+                await promisePool.query('DELETE FROM carrito WHERE usuario_id = ? AND producto_id = ?', [usuario_id, producto_id]);
+                return res.status(200).json({ message: 'Producto eliminado del carrito' });
+            }
+
+            console.log('Valores antes de la consulta UPDATE:', { usuario_id, producto_id, cantidad });
+            const [updateResult] = await promisePool.query('UPDATE carrito SET cantidad = ? WHERE usuario_id = ? AND producto_id = ?', [cantidad, usuario_id, producto_id]);
+            console.log('Resultado de la consulta UPDATE:', updateResult);
+
+            const [carritoState] = await promisePool.query('SELECT * FROM carrito WHERE usuario_id = ? AND producto_id = ?', [usuario_id, producto_id]);
+            console.log('Estado del carrito después de la consulta UPDATE:', carritoState);
+
+            if (updateResult.affectedRows === 0) {
+                console.warn('No se encontró el producto en el carrito para actualizar.');
+            }
+
+            res.status(200).json({ message: 'Cantidad actualizada correctamente' });
+        } catch (error) {
+            console.error('Error al actualizar la cantidad en el carrito:', error);
+            res.status(500).json({ message: 'Error al actualizar la cantidad en el carrito' });
+        }
+    }
+
+    static async deleteFromCart(req, res) {
+        try {
+            const { producto_id } = req.body;
+            const authHeader = req.headers.authorization;
+            if (!authHeader) {
+                return res.status(401).json({ message: 'No se proporcionó un token de autenticación' });
+            }
+
+            const token = authHeader.split(' ')[1];
+            let usuario_id;
+            try {
+                const decoded = jwt.verify(token, 'secreto');
+                usuario_id = decoded.id;
+            } catch (error) {
+                return res.status(403).json({ message: 'Token no válido' });
+            }
+
+            await promisePool.query('DELETE FROM carrito WHERE usuario_id = ? AND producto_id = ?', [usuario_id, producto_id]);
+            res.status(200).json({ message: 'Producto eliminado del carrito' });
+        } catch (error) {
+            console.error('Error al eliminar el producto del carrito:', error);
+            res.status(500).json({ message: 'Error al eliminar el producto del carrito' });
+        }
+    }
 }
 
 module.exports = CartController;

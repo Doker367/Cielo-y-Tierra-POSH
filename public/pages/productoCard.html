@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Detalle del Producto - Cielo y Tierra</title>
+</head>
+<body class="bg-gray-100">
+    <!-- Navbar -->
+    <nav class="bg-black text-white p-4 mb-8">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <a href="/" class="text-2xl font-bold">Cielo y Tierra</a>
+            <button onclick="history.back()" class="text-white hover:text-gray-300 transition">
+                ← Volver
+            </button>
+        </div>
+    </nav>
+
+    <div class="max-w-6xl mx-auto p-6">
+        <div id="producto-detalle" class="bg-white shadow-lg rounded-lg overflow-hidden">
+            <!-- El contenido del producto se insertará aquí -->
+        </div>
+    </div>
+
+    <script src="/components/ProductDetailCard.js"></script>
+    <script>
+        // Obtener el ID del producto de la URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const productoId = urlParams.get('producto_id') || 1;
+
+        // Función para obtener los detalles del producto
+        async function obtenerProducto(productoId) {
+            try {
+                const response = await fetch(`/api/products/${productoId}`);
+                if (!response.ok) {
+                    throw new Error('Error al obtener los detalles del producto');
+                }
+                const producto = await response.json();
+                return producto;
+            } catch (error) {
+                console.error('Error:', error);
+                return null;
+            }
+        }
+
+        // Función para agregar al carrito
+        async function agregarAlCarrito(productoId) {
+            try {
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    window.location.href = '/pages/inisiosesion.html';
+                    return;
+                }
+
+                const response = await fetch('/api/cart', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ 
+                        producto_id: productoId,
+                        cantidad: 1
+                    })
+                });
+
+                if (response.ok) {
+                    mostrarMensaje('Producto agregado al carrito exitosamente');
+                } else {
+                    const error = await response.json();
+                    mostrarMensaje(error.message || 'Error al agregar al carrito', 'error');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                mostrarMensaje('Error al agregar al carrito', 'error');
+            }
+        }
+
+        // Función para agregar a favoritos
+        async function agregarAFavoritos(productoId) {
+            try {
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    window.location.href = '/pages/inisiosesion.html';
+                    return;
+                }
+
+                const response = await fetch('/api/favorites', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ producto_id: productoId })
+                });
+
+                if (response.ok) {
+                    mostrarMensaje('Producto agregado a favoritos exitosamente');
+                } else {
+                    mostrarMensaje('Error al agregar a favoritos', 'error');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                mostrarMensaje('Error al agregar a favoritos', 'error');
+            }
+        }
+
+        // Función para mostrar mensajes
+        function mostrarMensaje(mensaje, tipo = 'success') {
+            const color = tipo === 'success' ? 'bg-green-500' : 'bg-red-500';
+            const mensajeDiv = document.createElement('div');
+            mensajeDiv.className = `fixed top-4 right-4 ${color} text-white px-6 py-3 rounded-lg shadow-lg transition-opacity duration-500`;
+            mensajeDiv.textContent = mensaje;
+            
+            document.body.appendChild(mensajeDiv);
+            
+            setTimeout(() => {
+                mensajeDiv.style.opacity = '0';
+                setTimeout(() => mensajeDiv.remove(), 500);
+            }, 3000);
+        }
+
+        // Renderizar el producto al cargar la página
+        document.addEventListener('DOMContentLoaded', async () => {
+            const contenedor = document.getElementById('producto-detalle');
+            const producto = await obtenerProducto(productoId);
+            
+            if (producto) {
+                contenedor.innerHTML = ProductDetailCard.create(producto);
+            } else {
+                contenedor.innerHTML = '<p class="text-red-500 p-4">No se pudo cargar el producto</p>';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -27,25 +27,10 @@
   <!-- Navbar -->
   <nav class="fixed w-full bg-black p-4 z-50">
     <div class="max-w-6xl mx-auto flex items-center justify-between">
-      <div class="text-2xl font-bold">
-        <a href="#" class="text-white fond-mono ">Cielo y Tierra</a>
-      </div>
-      <ul class="flex space-x-4 md:space-x-8 items-center">
-        <li>
-          <a href="#" class="text-white hover:text-white transition duration-100 hover:underline hover:underline-offset-4 hover:decoration-blue-500">
-            Inicio</a>
-        </li>
-        <li>
-          <a href="/pages/comprar.html" class="flex items-center bg-red-700 text-white px-1 py-1 pb-1 pt-1 rounded-lg shadow-md hover:bg-red-500 transition">
-            <img src="/images/icons/Cart.gif" alt="Login Icon" class="w-6 h-6 mr-2 hover:animate-bounce" />
-            Comprar Ahora
-          </a>
-        </li>
-        <li>
-          <a href="/pages/nosotros.html" class="w-16 md:w-32 lg:w-48 text-white hover:text-white transition duration-100 hover:underline hover:underline-offset-4 hover:decoration-blue-500">Acerca de nosotros</a>
-        </li>
-
-      </ul>
+      <span class="text-white text-lg font-bold">CIELO Y TIERRA</span>
+      <button onclick="history.back()" class="text-white flex items-center">
+        <span class="mr-2">⬅</span> Regresar
+      </button>
     </div>
   </nav>
   
@@ -273,16 +258,50 @@
         });
 
         if (response.ok) {
-          alert('Compra confirmada. Se ha enviado un correo con los detalles.');
+          mostrarNotificacionExito('¡Compra confirmada!', 'Se ha enviado un correo con los detalles de tu compra.');
           document.getElementById('modal-ticket').classList.add('hidden');
         } else {
-          alert('Error al confirmar la compra. Inténtalo de nuevo.');
+          mostrarNotificacionError('Error al confirmar la compra. Inténtalo de nuevo.');
         }
       } catch (error) {
         console.error('Error al confirmar la compra:', error);
-        alert('Error al confirmar la compra. Inténtalo de nuevo.');
+        mostrarNotificacionError('Error al confirmar la compra. Inténtalo de nuevo.');
       }
     });
+
+    // Notificación bonita de éxito
+    function mostrarNotificacionExito(titulo, mensaje) {
+      const noti = document.createElement('div');
+      noti.className = 'fixed top-0 left-0 w-full flex justify-center z-50';
+      noti.innerHTML = `
+        <div class="bg-green-500 text-white px-8 py-4 mt-6 rounded-lg shadow-lg flex flex-col items-center animate__animated animate__fadeInDown" style="max-width: 400px;">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2l4-4m5 2a9 9 0 11-18 0a9 9 0 0118 0z" /></svg>
+          <h2 class="text-xl font-bold mb-1">${titulo}</h2>
+          <p class="text-center">${mensaje}</p>
+        </div>
+      `;
+      document.body.appendChild(noti);
+      setTimeout(() => {
+        noti.remove();
+      }, 3500);
+    }
+
+    // Notificación bonita de error
+    function mostrarNotificacionError(mensaje) {
+      const noti = document.createElement('div');
+      noti.className = 'fixed top-0 left-0 w-full flex justify-center z-50';
+      noti.innerHTML = `
+        <div class="bg-red-600 text-white px-8 py-4 mt-6 rounded-lg shadow-lg flex flex-col items-center animate__animated animate__fadeInDown" style="max-width: 400px;">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+          <h2 class="text-xl font-bold mb-1">¡Error!</h2>
+          <p class="text-center">${mensaje}</p>
+        </div>
+      `;
+      document.body.appendChild(noti);
+      setTimeout(() => {
+        noti.remove();
+      }, 3500);
+    }
 
     // Función para mostrar un mensaje con esquinas redondeadas
     function mostrarMensajeExito(correctamente) {

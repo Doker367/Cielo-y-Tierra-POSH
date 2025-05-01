@@ -1,0 +1,40 @@
+/* Agregar efecto de neón azul al hover de los enlaces del navbar */
+.navbar-link:hover {
+  text-shadow: none; /* Eliminar la línea blanca al pasar el ratón */
+}
+
+body {
+  background-attachment: fixed; /* Mantener el fondo fijo */
+  background-size: cover;
+  background-position: center;
+  filter: none; /* Eliminar cualquier efecto del fondo */
+}
+
+/* Agregar animación de saturación y escala al hacer scroll */
+.animate-on-scroll {
+  opacity: 1; /* Hacer que los elementos sean visibles de forma estática */
+  transform: none; /* Eliminar transformaciones */
+  filter: none; /* Eliminar efectos de saturación */
+  transition: none; /* Eliminar transiciones */
+}
+
+.animate-on-scroll.visible {
+  opacity: 1;
+  transform: scale(1);
+  filter: saturate(100%);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+img[loading="lazy"] {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+img[loading="lazy"].loaded {
+  opacity: 1;
+}
