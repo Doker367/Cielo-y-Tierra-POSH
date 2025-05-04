@@ -217,11 +217,22 @@
 
         total += parseFloat(subtotal) || 0;
 
+        // Crear elemento para el producto con diseño actualizado
         const productoDiv = document.createElement('div');
-        productoDiv.className = 'flex justify-between mb-2';
+        productoDiv.className = 'flex items-center gap-4 p-6 border rounded-lg shadow-lg hover:shadow-xl transition-shadow';
+        productoDiv.style.width = '100%'; // Hacer el contenedor más amplio
         productoDiv.innerHTML = `
-          <span>${producto} (x${cantidad})</span>
-          <span>${subtotal}</span>
+          <img src="${producto.imagen}" alt="${producto.nombre}" class="w-32 h-32 object-cover rounded-lg">
+          <div class="flex-1">
+            <h3 class="text-lg font-semibold">${producto.nombre}</h3>
+            <p class="text-sm text-gray-500">${producto.descripcion}</p>
+            <p class="text-sm text-gray-700 mt-2">Precio unitario: <span class="font-medium">$${producto.precio.toFixed(2)}</span></p>
+            <div class="mt-2 flex items-center gap-2">
+              <label for="cantidad-${producto.id}" class="text-sm font-medium">Cantidad:</label>
+              <input id="cantidad-${producto.id}" type="number" min="1" value="${producto.cantidad}" class="w-16 border rounded px-2 py-1">
+            </div>
+          </div>
+          <p class="text-lg font-semibold text-indigo-600">$${(producto.precio * producto.cantidad).toFixed(2)}</p>
         `;
         ticketProductos.appendChild(productoDiv);
       });

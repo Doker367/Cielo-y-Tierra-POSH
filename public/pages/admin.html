@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="bg-gray-800 text-white p-4">
+        <div class="max-w-6xl mx-auto flex justify-between">
+            <h1 class="text-xl font-bold">Panel de Administración</h1>
+            <button onclick="logout()" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Cerrar Sesión</button>
+        </div>
+    </nav>
+
+    <div class="max-w-6xl mx-auto mt-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-blue-500 text-white p-4 rounded shadow">
+                <h2 class="text-lg font-bold">Gestión de Productos</h2>
+                <button onclick="navigateTo('productos')" class="mt-2 bg-white text-blue-500 font-bold py-2 px-4 rounded">Administrar</button>
+            </div>
+            <div class="bg-green-500 text-white p-4 rounded shadow">
+                <h2 class="text-lg font-bold">Gestión de Usuarios</h2>
+                <button onclick="navigateTo('usuarios')" class="mt-2 bg-white text-green-500 font-bold py-2 px-4 rounded">Administrar</button>
+            </div>
+            <div class="bg-yellow-500 text-white p-4 rounded shadow">
+                <h2 class="text-lg font-bold">Gestión de Pedidos</h2>
+                <button onclick="navigateTo('pedidos')" class="mt-2 bg-white text-yellow-500 font-bold py-2 px-4 rounded">Administrar</button>
+            </div>
+        </div>
+
+        <section class="mt-8">
+            <h2 class="text-xl font-bold mb-4">Gestión de Productos</h2>
+
+            <!-- Tabla de productos -->
+            <table class="table-auto w-full border-collapse border border-gray-300">
+                <thead>
+                    <tr class="bg-gray-200">
+                        <th class="border border-gray-300 px-4 py-2">ID</th>
+                        <th class="border border-gray-300 px-4 py-2">Nombre</th>
+                        <th class="border border-gray-300 px-4 py-2">Categoría</th>
+                        <th class="border border-gray-300 px-4 py-2">Marca</th>
+                        <th class="border border-gray-300 px-4 py-2">Descripción</th>
+                        <th class="border border-gray-300 px-4 py-2">Precio</th>
+                        <th class="border border-gray-300 px-4 py-2">Contenido (ml)</th>
+                        <th class="border border-gray-300 px-4 py-2">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="productos-body">
+                    <!-- Los productos se generarán dinámicamente aquí -->
+                </tbody>
+            </table>
+
+            <!-- Formulario para agregar productos -->
+            <h3 class="text-lg font-bold mt-8">Agregar Producto</h3>
+            <form id="form-agregar-producto" class="mt-4 space-y-4">
+                <div>
+                    <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre</label>
+                    <input type="text" id="nombre" name="nombre" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                </div>
+                <div>
+                    <label for="categoria" class="block text-sm font-medium text-gray-700">Categoría</label>
+                    <input type="text" id="categoria" name="categoria" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                </div>
+                <div>
+                    <label for="marca" class="block text-sm font-medium text-gray-700">Marca</label>
+                    <input type="text" id="marca" name="marca" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                </div>
+                <div>
+                    <label for="descripcion" class="block text-sm font-medium text-gray-700">Descripción</label>
+                    <textarea id="descripcion" name="descripcion" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"></textarea>
+                </div>
+                <div>
+                    <label for="precio" class="block text-sm font-medium text-gray-700">Precio</label>
+                    <input type="number" id="precio" name="precio" step="0.01" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                </div>
+                <div>
+                    <label for="contenido_ml" class="block text-sm font-medium text-gray-700">Contenido (ml)</label>
+                    <input type="number" id="contenido_ml" name="contenido_ml" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                </div>
+                <div>
+                    <label for="imagen" class="block text-sm font-medium text-gray-700">URL de la Imagen</label>
+                    <input type="text" id="imagen" name="imagen" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                </div>
+                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-md shadow hover:bg-blue-700">Agregar Producto</button>
+            </form>
+        </section>
+
+
+    </div>
+
+    <script>
+        function navigateTo(section) {
+            // Navegar a la sección correspondiente
+            alert(`Navegando a la sección: ${section}`);
+        }
+
+        function logout() {
+            // Lógica para cerrar sesión
+            alert('Cerrando sesión...');
+        }
+
+        // Función para obtener productos
+        async function obtenerProductos() {
+            try {
+                const response = await fetch('/api/products');
+                const productos = await response.json();
+                const productosBody = document.getElementById('productos-body');
+                productosBody.innerHTML = '';
+
+                productos.forEach(producto => {
+                    const fila = document.createElement('tr');
+                    fila.innerHTML = `
+                        <td class="border border-gray-300 px-4 py-2">${producto.id_producto}</td>
+                        <td class="border border-gray-300 px-4 py-2">${producto.nombre}</td>
+                        <td class="border border-gray-300 px-4 py-2">${producto.categoria}</td>
+                        <td class="border border-gray-300 px-4 py-2">${producto.marca}</td>
+                        <td class="border border-gray-300 px-4 py-2">${producto.descripcion}</td>
+                        <td class="border border-gray-300 px-4 py-2">${producto.precio}</td>
+                        <td class="border border-gray-300 px-4 py-2">${producto.contenido_ml}</td>
+                        <td class="border border-gray-300 px-4 py-2">
+                            <button onclick="eliminarProducto(${producto.id_producto})" class="bg-red-600 text-white px-2 py-1 rounded">Eliminar</button>
+                        </td>
+                    `;
+                    productosBody.appendChild(fila);
+                });
+            } catch (error) {
+                console.error('Error al obtener productos:', error);
+            }
+        }
+
+        // Función para eliminar un producto
+        async function eliminarProducto(idProducto) {
+            try {
+                const response = await fetch(`/api/products/${idProducto}`, {
+                    method: 'DELETE'
+                });
+
+                if (response.ok) {
+                    alert('Producto eliminado con éxito');
+                    obtenerProductos();
+                } else {
+                    alert('Error al eliminar el producto');
+                }
+            } catch (error) {
+                console.error('Error al eliminar producto:', error);
+            }
+        }
+
+        // Función para agregar un producto
+        document.getElementById('form-agregar-producto').addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            const formData = new FormData(event.target);
+            const producto = Object.fromEntries(formData.entries());
+
+            try {
+                const response = await fetch('/api/products', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(producto)
+                });
+
+                if (response.ok) {
+                    alert('Producto agregado con éxito');
+                    event.target.reset();
+                    obtenerProductos();
+                } else {
+                    alert('Error al agregar el producto');
+                }
+            } catch (error) {
+                console.error('Error al agregar producto:', error);
+            }
+        });
+
+        // Cargar productos al cargar la página
+        document.addEventListener('DOMContentLoaded', obtenerProductos);
+
+        
+
+
+    </script>
+</body>
+</html>

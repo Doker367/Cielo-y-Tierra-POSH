@@ -98,10 +98,16 @@
                 if (result.token) {
                     localStorage.setItem('token', result.token); // Almacenar el token en localStorage
                     localStorage.setItem('userId', result.user.id); // Almacenar el ID del usuario en localStorage
+                    localStorage.setItem('userRole', result.user.rol); // Almacenar el rol del usuario en localStorage
+                    console.log('Rol del usuario:', result.user.rol); // Mostrar el rol en la consola
                 }
                 showSuccess('¡Bienvenido! Redirigiendo...');
                 setTimeout(() => {
-                    window.location.href = '/pages/comprarRegistrado.html'; // Redirigir a comprarRegistrado.html
+                    if (result.user.role === 'admin') {
+                        window.location.href = '/pages/admin.html'; // Redirigir al panel de administración si es administrador
+                    } else {
+                        window.location.href = '/pages/comprarRegistrado.html'; // Redirigir a la página de usuario normal
+                    }
                 }, 500);
 
             } catch (error) {

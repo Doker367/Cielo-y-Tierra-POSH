@@ -7,10 +7,7 @@ class ProductCard {
         } = options;
 
         const productImage = `
-            <div class="relative">
-                <span class="absolute top-2 left-2 bg-orange-400 text-white text-xs font-semibold px-2 py-1 rounded-full">
-                    -${producto.descuento || 0}%
-                </span>
+
                 <div>
                     ${isClickable 
                         ? `<a href="/pages/productoCard.html?producto_id=${producto.producto_id}">

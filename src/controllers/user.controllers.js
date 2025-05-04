@@ -120,7 +120,8 @@ exports.loginUser = async (req, res) => {
             user: {
                 id: user.id,
                 nombre_usuario: user.nombre_usuario,
-                correo: user.correo
+                correo: user.correo,
+                rol: user.rol // Incluir el rol del usuario en la respuesta
             }
         });
 

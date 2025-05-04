@@ -131,13 +131,11 @@
         }
         // Función para crear una tarjeta de producto
         function crearTarjetaProducto(producto) {
-            console.log('Creando tarjeta para producto con ID:', producto.producto_id); // Debugging log
+            
             return `
                 <div class="w-full border border-blue-200 rounded-lg shadow-md p-4 bg-white">
                     <div class="relative">
-                        <span class="absolute top-2 left-2 bg-orange-400 text-white text-xs font-semibold px-2 py-1 rounded-full">
-                            -${producto.descuento || 0}%
-                        </span>
+                        
                         <div>
                             <img src="${producto.imagen}" alt="${producto.nombre}" class="object-contain w-full h-48">
                         </div>
@@ -213,36 +211,22 @@
         }
 
         async function agregarAFavoritos(productoId) {
-            console.log('Intentando agregar a favoritos el producto con ID:', productoId); // Debugging log
             try {
-                const usuarioId = localStorage.getItem('userId'); // Obtener el ID del usuario dinámicamente
-                const token = localStorage.getItem('token'); // Obtener el token de autenticación
-
-                if (!token) {
-                    mostrarMensaje('No se encontró un token de autenticación. Por favor, inicia sesión.', true);
-                    return;
-                }
+                const usuarioId = 1; // ID del usuario actualmente autenticado
 
                 const response = await fetch('/api/favorites', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}` // Incluir el token en el encabezado
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ usuario_id: usuarioId, producto_id: productoId })
                 });
 
                 if (response.ok) {
-                    const data = await response.json();
-                    mostrarMensaje(data.message || 'Producto agregado a favoritos con éxito');
+                    mostrarMensaje('Producto agregado a favoritos con éxito');
                 } else {
-                    const errorData = await response.json();
-                    console.error('Error al agregar a favoritos:', errorData.message);
-                    mostrarMensaje(errorData.message || 'Error al agregar a favoritos');
+                    console.error('Error al agregar a favoritos');
                 }
             } catch (error) {
                 console.error('Error al agregar a favoritos:', error);
-                mostrarMensaje('Error al agregar a favoritos. Inténtalo de nuevo más tarde.');
             }
         }
 
@@ -260,10 +244,57 @@
         // Lógica del carrusel
         document.addEventListener('DOMContentLoaded', function () {
             const userId = localStorage.getItem('userId');
+            const userRole = localStorage.getItem('userRole'); // Obtener el rol del usuario desde localStorage
+
             if (!userId) {
                 window.location.href = '/pages/inisiosesion.html'; // Redirigir al inicio de sesión si no hay sesión activa
                 return;
             }
+            // Seleccionar el botón del avatar correctamente
+            const avatarButton = document.querySelector('button img[alt="Avatar Icon"]');
+            if (!avatarButton) {
+                console.error('No se encontró el botón del avatar.');
+                return;
+            }
+
+            // Crear el menú desplegable
+            const dropdownMenu = document.createElement('ul');
+            dropdownMenu.className = 'absolute bg-white shadow-md rounded-lg mt-2 hidden z-50';
+            dropdownMenu.style.minWidth = '150px';
+            dropdownMenu.style.right = '0'; // Asegurar que el menú se alinee correctamente a la derecha
+            dropdownMenu.style.left = 'auto'; // Evitar que se desplace fuera de la pantalla en pantallas pequeñas
+
+            // Opción de perfil
+            const profileOption = document.createElement('li');
+            profileOption.innerHTML = '<a href="/pages/perfil.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Perfil</a>';
+            dropdownMenu.appendChild(profileOption);
+
+            // Opción de administrador (solo para admin)
+            if (userRole === 'admin') {
+                const adminOption = document.createElement('li');
+                adminOption.innerHTML = '<a href="/pages/admin.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Panel de Administración</a>';
+                dropdownMenu.appendChild(adminOption);
+            }
+
+            // Opción de cerrar sesión
+            const logoutOption = document.createElement('li');
+            logoutOption.innerHTML = '<a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100" onclick="logout()">Cerrar Sesión</a>';
+            dropdownMenu.appendChild(logoutOption);
+
+            // Agregar el menú desplegable al DOM
+            avatarButton.parentElement.appendChild(dropdownMenu);
+
+            // Mostrar/ocultar el menú al hacer clic en el ícono de avatar
+            avatarButton.addEventListener('click', function () {
+                dropdownMenu.classList.toggle('hidden');
+            });
+
+            // Cerrar sesión
+            window.logout = function () {
+                localStorage.clear();
+                window.location.href = '/pages/inisiosesion.html';
+            };
+
             // Continuar con la lógica de la página si hay sesión activa
 
             const carousel = document.querySelector('.carousel');
