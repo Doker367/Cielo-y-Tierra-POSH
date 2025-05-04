@@ -5,7 +5,7 @@ exports.addToFavorites = async (req, res) => {
     const { usuario_id, producto_id } = req.body;
     try {
         await promisePool.query(
-            'INSERT INTO favoritos (id_usuario, id_producto) VALUES (?, ?) ON DUPLICATE KEY UPDATE id_producto = id_producto',
+            'INSERT INTO favoritos (usuario_id, producto_id) VALUES (?, ?) ON DUPLICATE KEY UPDATE producto_id = producto_id',
             [usuario_id, producto_id]
         );
         res.status(200).json({ message: 'Producto agregado a favoritos correctamente' });
@@ -20,7 +20,7 @@ exports.getFavorites = async (req, res) => {
     const { usuario_id } = req.params;
     try {
         const [result] = await promisePool.query(
-            'SELECT p.nombre, p.precio FROM favoritos f JOIN productos_posh p ON f.id_producto = p.id_producto WHERE f.id_usuario = ?',
+            'SELECT p.nombre, p.precio FROM favoritos f JOIN productos_posh p ON f.producto_id = p.producto_id WHERE f.usuario_id = ?',
             [usuario_id]
         );
         res.status(200).json(result);

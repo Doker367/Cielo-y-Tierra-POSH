@@ -137,7 +137,7 @@
                         <p class="uppercase text-green-600 text-xs font-medium">${producto.descripcion}</p>
                         <div class="flex items-baseline space-x-2 mt-2">
                             <span class="text-blue-600 text-xl font-semibold">${producto.precio.toFixed(2)}</span>
-                            <span class="text-gray-400 text-sm line-through">${producto.precio.toFixed(2)}</span>
+                            ${producto.precio_regular ? `<span class="text-gray-400 text-sm line-through">${producto.precio_regular.toFixed(2)}</span>` : ''}
                         </div>
                         <div class="mt-4 flex justify-between items-center">
                             <button onclick="agregarAlCarrito(${producto.producto_id})" class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center shadow text-white">

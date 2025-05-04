@@ -5,7 +5,7 @@ class ProductController {
         try {
             const products = await ProductModel.getAllProducts();
             return products.map(producto => ({
-                producto_id: producto.id_producto,
+                producto_id: producto.producto_id, // Correctly map the product ID
                 nombre: producto.nombre,
                 descripcion: producto.descripcion,
                 precio: parseFloat(producto.precio),

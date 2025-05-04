@@ -29,6 +29,9 @@
             Inicio</a>
         </li>
         <li>
+          <a href="/pages/nosotros.html" class="w-16 md:w-32 lg:w-48 text-white hover:text-white transition duration-100 hover:underline hover:underline-offset-4 hover:decoration-blue-500">Acerca de nosotros</a>
+        </li>
+        <li>
           <a href="/pages/carrito.html" class="bg-transparent text-white hover:animate-bounce focus:outline-none">
             <img src="/images/icons/Cart.svg" alt="Cart Icon" class="w-6 h-6" />
           </a>
@@ -56,11 +59,11 @@
                     class="w-full h-96 object-cover">
             </div>
             <div class="carousel-item">
-                <img src="/images/ns1.jpg" alt="Carousel Image 2"
+                <img src="/images/c2.jpg" alt="Carousel Image 2"
                     class="w-full h-96 object-cover">
             </div>
             <div class="carousel-item">
-                <img src="/images/ns2.jpg" alt="Carousel Image 2"
+                <img src="/images/inicio3.jpg" alt="Carousel Image 3"
                     class="w-full h-96 object-cover">
             </div>
         </div>
@@ -119,6 +122,7 @@
             try {
                 const response = await fetch('/api/products');
                 const productos = await response.json();
+                console.log('Productos obtenidos:', productos); // Debugging log
                 return productos;
             } catch (error) {
                 console.error('Error al obtener productos:', error);
@@ -127,6 +131,7 @@
         }
         // Función para crear una tarjeta de producto
         function crearTarjetaProducto(producto) {
+            console.log('Creando tarjeta para producto con ID:', producto.producto_id); // Debugging log
             return `
                 <div class="w-full border border-blue-200 rounded-lg shadow-md p-4 bg-white">
                     <div class="relative">
@@ -172,11 +177,13 @@
         }
         // Función para agregar al carrito
         async function agregarAlCarrito(productoId) {
+            console.log('Intentando agregar al carrito el producto con ID:', productoId); // Debugging log
             try {
-                const token = localStorage.getItem('token'); // Obtener el token almacenado en localStorage
+                const usuarioId = localStorage.getItem('userId'); // Obtener el ID del usuario dinámicamente
+                const token = localStorage.getItem('token'); // Obtener el token de autenticación
+
                 if (!token) {
-                    console.error('No se encontró un token de autenticación');
-                    mostrarMensaje('No se encontró un token de autenticación. Por favor, inicia sesión.');
+                    mostrarMensaje('No se encontró un token de autenticación. Por favor, inicia sesión.', true);
                     return;
                 }
 
@@ -186,9 +193,9 @@
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}` // Enviar el token en el encabezado Authorization
+                        'Authorization': `Bearer ${token}` // Incluir el token en el encabezado
                     },
-                    body: JSON.stringify({ producto_id: productoId, cantidad })
+                    body: JSON.stringify({ usuario_id: usuarioId, producto_id: productoId, cantidad })
                 });
 
                 if (response.ok) {
@@ -206,22 +213,36 @@
         }
 
         async function agregarAFavoritos(productoId) {
+            console.log('Intentando agregar a favoritos el producto con ID:', productoId); // Debugging log
             try {
-                const usuarioId = 36; // ID del usuario actualmente autenticado
+                const usuarioId = localStorage.getItem('userId'); // Obtener el ID del usuario dinámicamente
+                const token = localStorage.getItem('token'); // Obtener el token de autenticación
+
+                if (!token) {
+                    mostrarMensaje('No se encontró un token de autenticación. Por favor, inicia sesión.', true);
+                    return;
+                }
 
                 const response = await fetch('/api/favorites', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}` // Incluir el token en el encabezado
+                    },
                     body: JSON.stringify({ usuario_id: usuarioId, producto_id: productoId })
                 });
 
                 if (response.ok) {
-                    mostrarMensaje('Producto agregado a favoritos con éxito');
+                    const data = await response.json();
+                    mostrarMensaje(data.message || 'Producto agregado a favoritos con éxito');
                 } else {
-                    console.error('Error al agregar a favoritos');
+                    const errorData = await response.json();
+                    console.error('Error al agregar a favoritos:', errorData.message);
+                    mostrarMensaje(errorData.message || 'Error al agregar a favoritos');
                 }
             } catch (error) {
                 console.error('Error al agregar a favoritos:', error);
+                mostrarMensaje('Error al agregar a favoritos. Inténtalo de nuevo más tarde.');
             }
         }
 
@@ -238,6 +259,13 @@
 
         // Lógica del carrusel
         document.addEventListener('DOMContentLoaded', function () {
+            const userId = localStorage.getItem('userId');
+            if (!userId) {
+                window.location.href = '/pages/inisiosesion.html'; // Redirigir al inicio de sesión si no hay sesión activa
+                return;
+            }
+            // Continuar con la lógica de la página si hay sesión activa
+
             const carousel = document.querySelector('.carousel');
             const items = document.querySelectorAll('.carousel-item');
             const prevButton = document.querySelector('.carousel-control-prev');
@@ -247,8 +275,6 @@
             function showItem(index) {
                 items.forEach((item, i) => {
                     item.style.transform = `translateX(${100 * (i - index)}%)`;
-                    item.style.display = i === index ? 'block' : 'none';
-                    item.style.transition = 'transform 0.8s cubic-bezier(0.25, 1, 0.5, 1)'; // Mejora de la animación
                 });
             }
 
@@ -261,12 +287,6 @@
                 currentIndex = (currentIndex < items.length - 1) ? currentIndex + 1 : 0;
                 showItem(currentIndex);
             });
-
-            // Mover automáticamente cada 2 segundos
-            setInterval(() => {
-                currentIndex = (currentIndex < items.length - 1) ? currentIndex + 1 : 0;
-                showItem(currentIndex);
-            }, 2000);
 
             showItem(currentIndex); // Mostrar el primer elemento inicialmente
         });

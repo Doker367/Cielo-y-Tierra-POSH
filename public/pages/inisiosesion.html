@@ -97,6 +97,7 @@
                 // Login exitoso
                 if (result.token) {
                     localStorage.setItem('token', result.token); // Almacenar el token en localStorage
+                    localStorage.setItem('userId', result.user.id); // Almacenar el ID del usuario en localStorage
                 }
                 showSuccess('¡Bienvenido! Redirigiendo...');
                 setTimeout(() => {
